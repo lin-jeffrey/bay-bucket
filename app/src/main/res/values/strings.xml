@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BayBucket</string>
+    <string name="bucket_list_page_heading">Bucket List</string>
+    <string name="bucket_list_page_img_desc">Main image</string>
 </resources>
