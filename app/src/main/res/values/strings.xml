@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BayBucket</string>
+    <string name="see_all"><u>See All</u></string>
 </resources>
