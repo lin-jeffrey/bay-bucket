@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.baybucket">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,11 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BayBucket">
         <activity
-            android:name=".LeaderBoard"
-            android:exported="false" />
-        <activity
-            android:name=".BucketList"
-            android:exported="false" />
+            android:name=".Home"
+            android:exported="true"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.BayBucket.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -26,6 +22,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ProfileActivity">
+        </activity>
+        <activity
+            android:name=".MemoryActivity">
+        </activity>
+        <activity
+            android:name=".DestinationActivity">
         </activity>
     </application>
 

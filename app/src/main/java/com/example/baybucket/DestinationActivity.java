@@ -1,14 +1,14 @@
 package com.example.baybucket;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LeaderBoard extends AppCompatActivity {
+import android.os.Bundle;
+
+public class DestinationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leader_board);
+        setContentView(R.layout.activity_destination);
     }
 }

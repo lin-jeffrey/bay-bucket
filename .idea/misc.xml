@@ -4,7 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_bucket_list.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/activity_destination.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/activity_leader_board.xml" value="0.3474770642201835" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_memory.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/content_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_leaderboard.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.1578125" />
       </map>
     </option>
   </component>
