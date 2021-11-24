@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LeaderBoard"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rank"
+            android:textSize="20sp"
+            android:layout_alignParentStart="true">
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Points"
+            android:textSize="20sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="3"
+        android:padding="20dp">
+        <TableRow>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/gold_medal" />
+            <TextView
+                android:text="Mary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:text="432"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+        <TableRow>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/silver_medal" />
+            <TextView
+                android:text="James"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:text="303"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+        <TableRow>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/bronze_medal" />
+            <TextView
+                android:text="You"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:text="268"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="4"
+                android:textSize="20sp"
+                android:gravity="center"/>
+            <TextView
+                android:text="Peter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:text="200"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

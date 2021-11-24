@@ -32,6 +32,15 @@
         <activity
             android:name=".DestinationActivity">
         </activity>
+
+        <activity
+            android:name=".Login">
+        </activity>
+
+        <activity
+            android:name=".RegisterActivity">
+        </activity>
+
     </application>
 
 </manifest>
