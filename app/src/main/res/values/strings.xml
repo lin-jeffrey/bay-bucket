@@ -2,7 +2,7 @@
     <string name="app_name">BayBucket</string>
 
     <string name="see_all"><u>See All</u></string>
-  
+
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -18,4 +18,9 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="account">Edit Account</string>
     <string name="loremIpsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+    <string name="description">Description</string>
+    <string name="rating">Rating:</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="i_m_here">I\'M HERE</string>
 </resources>
