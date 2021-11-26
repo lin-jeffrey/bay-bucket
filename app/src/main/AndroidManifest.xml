@@ -36,6 +36,15 @@
         <activity
             android:name=".BucketList">
         </activity>
+
+        <activity
+            android:name=".Login">
+        </activity>
+
+        <activity
+            android:name=".RegisterActivity">
+        </activity>
+
     </application>
 
 </manifest>
