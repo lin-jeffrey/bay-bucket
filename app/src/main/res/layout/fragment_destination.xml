@@ -28,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight=".5">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -40,8 +41,9 @@
                     android:id="@+id/simple_rating_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:numStars="5" />
+                    android:layout_gravity="left"
+                    android:numStars="5"
+                    />
 
             </LinearLayout>
 
@@ -80,6 +82,8 @@
                 android:layout_width="wrap_content"
                 android:text="@string/submit"
                 android:layout_column="2"
+                android:layout_weight=".5"
+                android:layout_marginEnd="5dp"
                 style="?android:attr/buttonBarButtonStyle" />
 
         </TableRow>
