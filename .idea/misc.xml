@@ -32,6 +32,27 @@
         <entry key="app/src/main/res/menu/activity_home_drawer.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/menu/home.xml" value="0.1234375" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/drawable/edittext_bg.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/layout/activity_bucket_list.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/activity_destination.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_leader_board.xml" value="0.3474770642201835" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_memory.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.22083333333333333" />
+        <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/content_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_destination.xml" value="0.22759138262738587" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_leaderboard.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.22083333333333333" />
+        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.1578125" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.10833333333333334" />
       </map>
     </option>
   </component>
