@@ -2,6 +2,7 @@ package com.example.baybucket.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.baybucket.BucketList;
 import com.example.baybucket.R;
 import com.example.baybucket.databinding.FragmentHomeBinding;
+import com.example.baybucket.db.DestinationRepository;
+import com.example.baybucket.models.Destination;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -24,6 +29,12 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     ImageButton sf, sc, scr, sj, b, pa;
+
+    //db stuff
+    Destination myDestination;
+    DestinationRepository destinationRepository;
+
+    String TAG = "HomeFragment";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -82,6 +93,15 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+      
+        //Tanvi db stuff
+        destinationRepository = new DestinationRepository(getContext());
+        myDestination = new Destination("Golden Gate National Recreation Area", "Golden Gate", "San Francisco", "San Francisco");
+        myDestination = new Destination("Marin Headlands", "501 Stanyan St", "Urban Park", "San Francisco");
+        myDestination = new Destination("Ocean Beach", "Point Lobos Ave", "Beach", "San Francisco");
+        destinationRepository.insertDestination(myDestination);
+
+        List<Destination> destinationList = destinationRepository.getAll();
         pa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,8 +111,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-
+        Log.i(TAG, "Destination: "+destinationList.size());
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
