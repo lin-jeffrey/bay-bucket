@@ -3,14 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+
         <entry key="app/src/main/res/layout/activity_bucket_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_destination.xml" value="0.335" />
+
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/drawable/baseline_account_circle_18.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/drawable/baseline_manage_accounts_20.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/layout/activity_bucket_list.xml" value="0.2210144927536232" />
+
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1578125" />
-        <entry key="app/src/main/res/layout/activity_leader_board.xml" value="0.3474770642201835" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1578125" />
-        <entry key="app/src/main/res/layout/activity_memory.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1756639245534886" />
+        <entry key="app/src/main/res/layout/activity_leader_board.xml" value="0.2210144927536232" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2210144927536232" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/activity_memories.xml" value="0.14649122807017545" />
+        <entry key="app/src/main/res/layout/activity_memory.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.25" />
+
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/bucket_list_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/bucket_list_recycler.xml" value="0.1403985507246377" />
@@ -20,6 +31,22 @@
         <entry key="app/src/main/res/layout/fragment_leaderboard.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.1578125" />
+
+        <entry key="app/src/main/res/layout/activity_profile1.xml" value="0.15964912280701754" />
+        <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/baseline_leaderboard_24.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/content_home.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_leaderboard.xml" value="0.2210144927536232" />
+        <entry key="app/src/main/res/layout/fragment_leaderboard1.xml" value="0.16822916666666668" />
+        <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.375" />
+        <entry key="app/src/main/res/menu/activity_home_drawer.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/menu/home.xml" value="0.1234375" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.24270833333333333" />
+
       </map>
     </option>
   </component>
