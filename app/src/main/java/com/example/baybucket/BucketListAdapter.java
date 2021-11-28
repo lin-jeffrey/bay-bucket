@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,8 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 
     LayoutInflater layoutInflater;
     List<BucketListItems> bucketListItemsList;
-    public final static String TAG = "Success";
+
+    public final static String TAG = "BucketListAdapter";
 
     public BucketListAdapter(Context context, List<BucketListItems> bucketListItemsList){
         this.layoutInflater = LayoutInflater.from(context);
@@ -26,12 +28,13 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView listItemName, distance;
+        public CheckBox cb_item;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             listItemName = itemView.findViewById(R.id.tv_activityName);
             distance = itemView.findViewById(R.id.tv_distance);
-
+            cb_item = itemView.findViewById(R.id.cb_item);
         }
     }
 
@@ -44,9 +47,9 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.i(TAG, "position: "+position);
         holder.listItemName.setText(bucketListItemsList.get(position).getBucketListItemName());
         holder.distance.setText(bucketListItemsList.get(position).getDistance());
+        holder.cb_item.setChecked(bucketListItemsList.get(position).getVisited());
 
     }
 
