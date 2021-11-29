@@ -10,7 +10,6 @@
         android:layout_width="260dp"
         android:layout_height="283dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:src="@drawable/logo" />
 
     <TextView
@@ -18,7 +17,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BayBucket"
-        android:layout_marginTop="10dp"
         android:textSize="40dp"
         android:textColor="#020202"
         android:layout_below="@id/imageView"
@@ -49,12 +47,24 @@
         android:hint="Password"
         android:inputType="textPassword"/>
 
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Forgot Password?"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:layout_below="@id/password"
+        android:layout_marginTop="10dp"
+        android:onClick="onForgotPassword"/>
+
     <Button
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/forgotPassword"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="50dp"
         android:text="Register"
         android:backgroundTint="#D8E7CB"
@@ -65,10 +75,10 @@
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password"
+        android:layout_below="@id/forgotPassword"
         android:layout_toRightOf="@id/registerButton"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#356A1E"
         android:text="Login"
         android:onClick="Login"/>

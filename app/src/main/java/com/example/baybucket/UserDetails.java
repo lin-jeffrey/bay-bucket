@@ -3,6 +3,7 @@ package com.example.baybucket;
 public class UserDetails {
     public String name;
     public String email;
+
     public UserDetails(){
 
     }
@@ -11,4 +12,6 @@ public class UserDetails {
         this.name = name;
         this.email = email;
     }
+
+
 }
