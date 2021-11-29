@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,9 +15,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-        finish();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            // User is signed in (getCurrentUser() will be null if not signed in)
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            finish();
+        }
 
         // TODO delete me
         // temporary for accessing destination & destination review screens

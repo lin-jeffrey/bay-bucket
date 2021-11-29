@@ -3,6 +3,7 @@ package com.example.baybucket.ui.profile;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,15 @@ import com.example.baybucket.databinding.FragmentProfileBinding;
 import com.example.baybucket.models.Memory;
 import com.example.baybucket.models.User;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,43 +43,61 @@ public class ProfileFragment extends Fragment {
 
     private GridView imageGrid;
     private ArrayList<Uri> uriList;
-    private User user = new User("Joe", "joe@gmail.com", "password", 10, "android.resource://com.example.baybucket/drawable/logo");
+
+    private String currentUsername;
+    private String currentEmail;
+    private int currentPoints;
 
     private ImageView profile_image;
     private TextView username;
     private TextView points;
     private MapView map;
 
+    private DatabaseReference mDatabase;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
-
+        //binding
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //profile picture
+        //UI linking
         profile_image = (ImageView)root.findViewById(R.id.profile_picture);
-        profile_image.setImageURI(Uri.parse(user.getImageUri()));
-
-        //username
         username = (TextView)root.findViewById(R.id.username);
-        username.setText(user.getUsername());
-
-        //point total
         points = (TextView)root.findViewById(R.id.points);
-        points.setText("Points: " + Integer.toString(user.getPoints()));
+        map = (MapView)root.findViewById(R.id.map);
+        imageGrid = (GridView)root.findViewById(R.id.memories_grid);
+
+        //firebase db call for user info
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("Users").child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().child("name").getValue()));
+                    currentUsername = String.valueOf(task.getResult().child("name").getValue());
+                    currentEmail = String.valueOf(task.getResult().child("email").getValue());
+                    currentPoints = Integer.parseInt(String.valueOf(task.getResult().child("points").getValue()));
+
+                    username.setText(currentUsername);
+                    points.setText("Points: " + Integer.toString(currentPoints));
+                }
+            }
+        });
 
         //map
-        map = (MapView)root.findViewById(R.id.map);
-        //we will figure this out :(
+
 
         //memory grid
-        imageGrid = (GridView)root.findViewById(R.id.memories_grid);
         uriList = new ArrayList<Uri>();
 
         //temp hard coded memories
-        Date date =  new java.util.Date();
+        Date date =  new Date();
         Memory memorySC = new Memory("Joe", "Santa Clara", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara");
         Memory memorySF = new Memory("Joe", "San Francisco", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/san_francisco");
         Memory memoryPA = new Memory("Joe", "Palo Alto", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/palo_alto");
@@ -106,6 +134,7 @@ public class ProfileFragment extends Fragment {
 
         return root;
     }
+
 
     @Override
     public void onDestroyView() {
