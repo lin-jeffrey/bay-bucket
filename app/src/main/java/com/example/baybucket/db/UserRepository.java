@@ -23,13 +23,13 @@ public class UserRepository {
         userDatabase = Room.databaseBuilder(context, UserDatabase.class, DB_NAME).build();
     }
 
-    public void insertUser(String username, String email, String password) {
-        User user = new User(username, email, password);
+    public void insertUser(String username, String email) {
+        User user = new User(username, email);
         insertUser(user);
     }
 
-    public void insertUser(String username, String email, String password, int points, String imageUri) {
-        User user = new User(username, email, password, points, imageUri);
+    public void insertUser(String username, String email, int points, String imageUri) {
+        User user = new User(username, email, points, imageUri);
         insertUser(user);
     }
 
