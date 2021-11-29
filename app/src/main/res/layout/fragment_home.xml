@@ -7,15 +7,12 @@
     tools:context=".ui.home.HomeFragment"
     android:orientation="vertical">
 
-    <SearchView
+    <android.widget.SearchView
         android:id="@+id/search"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:hint="Location"
-        android:drawableRight="@android:drawable/ic_menu_search"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:iconifiedByDefault="false">
+    </android.widget.SearchView>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -161,77 +158,4 @@
         </LinearLayout>
         </ScrollView>
     </FrameLayout>
-<!--    <GridLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:columnCount="2"-->
-<!--        android:rowCount="3">-->
-<!--        <ImageButton-->
-<!--            android:id="@+id/sanFrancisco"-->
-<!--            android:src="@drawable/san_francisco"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_row="0"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_rowWeight="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            />-->
-<!--        <ImageButton-->
-<!--            android:id="@+id/santaClara"-->
-<!--            android:src="@drawable/santa_clara"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_row="0"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_rowWeight="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            />-->
-<!--        <ImageButton-->
-<!--            android:id="@+id/sanJose"-->
-<!--            android:src="@drawable/san_jose"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_row="1"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_rowWeight="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            />-->
-<!--        <ImageButton-->
-<!--            android:id="@+id/paloAlto"-->
-<!--            android:src="@drawable/palo_alto"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_row="1"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_rowWeight="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            />-->
-<!--        <ImageButton-->
-<!--            android:id="@+id/santaCruz"-->
-<!--            android:src="@drawable/santa_cruz"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_row="2"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_rowWeight="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            />-->
-<!--        <ImageButton-->
-<!--            android:id="@+id/berkeley"-->
-<!--            android:src="@drawable/berkeley"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:layout_row="2"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_rowWeight="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            />-->
-<!--    </GridLayout>-->
-
 </LinearLayout>

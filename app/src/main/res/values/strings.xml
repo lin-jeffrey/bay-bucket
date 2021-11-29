@@ -26,4 +26,7 @@
     <string name="bucket_list_page_heading">Bucket List</string>
     <string name="bucket_list_page_img_desc">Main image</string>
     <string name="logout">Logout</string>
+    <string name="app_label">Bay-Bucket</string>
+    <string name="search_hint">Search Locations</string>
+    <string name="action_search">Search</string>
 </resources>

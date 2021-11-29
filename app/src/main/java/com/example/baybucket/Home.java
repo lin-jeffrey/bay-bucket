@@ -1,7 +1,10 @@
 package com.example.baybucket;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageButton;
@@ -10,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import android.widget.SearchView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -58,6 +62,62 @@ public class Home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            doMySearch(query);
+        }
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) findViewById(R.id.search);
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                doMySearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+    }
+
+    private void doMySearch(String query) {
+        Intent intent = new Intent(this, BucketList.class);
+        switch(query.toLowerCase()){
+            case "san francisco" :
+                intent.putExtra("name", "san%20francisco");
+                startActivity(intent);
+                break;
+            case "santa clara" :
+                intent.putExtra("name", "santa%20clara");
+                startActivity(intent);
+                break;
+            case "san jose" :
+                intent.putExtra("name", "san%20jose");
+                startActivity(intent);
+                break;
+            case "santa cruz" :
+                intent.putExtra("name", "santa%20cruz");
+                startActivity(intent);
+                break;
+            case "berkeley" :
+                intent.putExtra("name", "berkeley");
+                startActivity(intent);
+                break;
+            case "palo alto" :
+                intent.putExtra("name", "palo%20alto");
+                startActivity(intent);
+                break;
+            default : Toast.makeText(this, "Sorry! " + query + " bucket list is not available. Please try some other city!", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     private void logout() {
@@ -71,10 +131,13 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the options menu from XML
+
         getMenuInflater().inflate(R.menu.home, menu);
+
         return true;
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
