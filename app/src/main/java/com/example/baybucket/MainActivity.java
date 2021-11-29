@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
+        finish();
 
         // TODO delete me
         // temporary for accessing destination & destination review screens

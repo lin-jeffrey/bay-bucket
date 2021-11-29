@@ -38,8 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void backToLoginPage(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
+        finish();
     }
 
     public void onRegister(View view) {
@@ -96,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         //Redirect to login layout
                                         Intent intent = new Intent(RegisterActivity.this, Login.class);
                                         startActivity(intent);
+                                        finish();
 
 
                                     }
@@ -109,9 +111,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-        // Intent intent = new Intent(this, Home.class);
-         //startActivity(intent);
+        
     }
 }
