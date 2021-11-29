@@ -7,10 +7,11 @@ import androidx.room.TypeConverters;
 
 import com.example.baybucket.db.Converters;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(primaryKeys = {"username","destinationName"})
-public class Memory {
+public class Memory implements Serializable {
     @NonNull
     private String username;
     @NonNull

@@ -15,7 +15,7 @@ import java.util.TimeZone;
 
 public class Converters {
     Gson gson = new Gson();
-    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final DateFormat df = new SimpleDateFormat("MM-dd-yyyy hh:mm aa");
 
     @TypeConverter
     public static ArrayList<Integer> fromString(String value) {

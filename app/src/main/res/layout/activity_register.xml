@@ -23,7 +23,7 @@
 
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/name"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_below="@+id/imageView"
@@ -31,7 +31,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/edittext_bg"
         android:padding="10dp"
-        android:hint="Username"
+        android:hint="Name"
         />
 
 
@@ -39,7 +39,7 @@
         android:id="@+id/email"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/username"
+        android:layout_below="@+id/name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/edittext_bg"
@@ -83,5 +83,5 @@
         android:layout_marginTop="40dp"
         android:backgroundTint="#356A1E"
         android:text="Register"
-        android:onClick="backToLoginPage"/>
+        android:onClick="onRegister"/>
 </RelativeLayout>
