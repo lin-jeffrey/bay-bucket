@@ -16,11 +16,11 @@
         android:id="@+id/bayBucket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BayBucket"
-        android:textSize="40dp"
-        android:textColor="#020202"
         android:layout_below="@id/imageView"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:text="BayBucket"
+        android:textColor="#020202"
+        android:textSize="40dp" />
 
 
     <EditText
