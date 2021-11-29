@@ -2,6 +2,7 @@ package com.example.baybucket;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -9,6 +10,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -61,7 +64,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     String fetchBucketListAPI_Key;
     String fetchDistanceAPI_Key;
 
-    //public final static String TAG = "Success";
+    ImageView main_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +84,18 @@ public class BucketList extends AppCompatActivity implements LocationListener {
         destinationRepository = new DestinationRepository(this.getApplicationContext());
 
 
-        fetchBucketListAPI_Key = BuildConfig.FOURSQUARE_KEY;
-        fetchDistanceAPI_Key = BuildConfig.DISTANCE_MATRIX_KEY;
+        changeMainImage();
 
+        //fetch hidden API keys
+        try {
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            fetchBucketListAPI_Key = bundle.getString("fourSquareKey");
+            fetchDistanceAPI_Key = bundle.getString("distanceMatrixKey");
+            //Log.i(TAG, "Bucket List API Key: "+fetchBucketListAPI_Key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         //Add runtime permission for accessing current location
@@ -102,6 +114,29 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
         }
         check_destinationList();
+    }
+
+    private void changeMainImage() {
+        main_image = findViewById(R.id.main_image);
+        if(bucketName.equals("san francisco")){
+            main_image.setBackgroundResource(R.drawable.sf_golden_gate);
+        }
+        else if(bucketName.equals("santa clara")){
+            main_image.setBackgroundResource(R.drawable.santa_clara_main);
+        }
+        else if(bucketName.equals("san jose")){
+            main_image.setBackgroundResource(R.drawable.san_jose_main);
+        }
+        else if(bucketName.equals("santa cruz")){
+            main_image.setBackgroundResource(R.drawable.santa_cruz_main);
+        }
+        else if(bucketName.equals("berkeley")){
+            main_image.setBackgroundResource(R.drawable.berkely_main);
+        }
+        else if(bucketName.equals("palo alto")){
+            main_image.setBackgroundResource(R.drawable.palo_alto_main);
+        }
+        main_image.requestLayout();
     }
 
     private void showProgress() {
