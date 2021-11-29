@@ -51,6 +51,12 @@
         <activity
             android:name=".ForgotPassword">
         </activity>
+        <meta-data
+            android:name = "fourSquareKey"
+            android:value = "${FOURSQUARE_KEY}"/>
+        <meta-data
+            android:name="distanceMatrixKey"
+            android:value="${DISTANCE_MATRIX_KEY}"/>
 
     </application>
 
