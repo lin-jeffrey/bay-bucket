@@ -80,6 +80,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
         destinationRepository = new DestinationRepository(this.getApplicationContext());
 
+
         fetchBucketListAPI_Key = BuildConfig.FOURSQUARE_KEY;
         fetchDistanceAPI_Key = BuildConfig.DISTANCE_MATRIX_KEY;
 
