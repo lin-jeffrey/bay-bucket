@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
     Destination myDestination;
     DestinationRepository destinationRepository;
 
-    String TAG = "HomeFragment";
+    //String TAG = "HomeFragment";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         sj = (ImageButton)root.findViewById(R.id.sanJose);
         scr = (ImageButton)root.findViewById(R.id.santaCruz);
         b = (ImageButton)root.findViewById(R.id.berkeley);
-        pa = (ImageButton)root.findViewById(R.id.sanFrancisco);
+        pa = (ImageButton)root.findViewById(R.id.paloAlto);
 
 
         sf.setOnClickListener(new View.OnClickListener() {
@@ -93,15 +93,6 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-      
-        //Tanvi db stuff
-        destinationRepository = new DestinationRepository(getContext());
-        myDestination = new Destination("Golden Gate National Recreation Area", "Golden Gate", "San Francisco", "San Francisco");
-        myDestination = new Destination("Marin Headlands", "501 Stanyan St", "Urban Park", "San Francisco");
-        myDestination = new Destination("Ocean Beach", "Point Lobos Ave", "Beach", "San Francisco");
-        destinationRepository.insertDestination(myDestination);
-
-        List<Destination> destinationList = destinationRepository.getAll();
         pa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,8 +101,19 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+      
+        //Tanvi db stuff
+        destinationRepository = new DestinationRepository(getContext());
+        myDestination = new Destination("Golden Gate National Recreation Area", "Golden Gate", "San Francisco", "san francisco");
+        myDestination = new Destination("Golden Gate Park", "501 Stanyan St", "Urban Park", "san francisco");
+        myDestination = new Destination("Ocean Beach", "Point Lobos Ave", "Beach", "San Francisco");
+        myDestination = new Destination("Catalpa Oaks County Park", "27725 Greenfield Rd", "Playground", "berkley");
+        myDestination = new Destination("San Pablo Park", "2800 Park St", "Playground", "berkeley");
+        destinationRepository.insertDestination(myDestination);
 
-        Log.i(TAG, "Destination: "+destinationList.size());
+        //List<Destination> destinationList = destinationRepository.getAll();
+        //Log.i(TAG, "Destination: "+destinationList.size());
+
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override

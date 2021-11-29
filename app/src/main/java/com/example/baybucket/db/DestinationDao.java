@@ -29,6 +29,6 @@ public interface DestinationDao {
     @Query("SELECT * FROM Destination WHERE name =:destinationName")
     List<Destination> getDestByName(String destinationName);
 
-    @Query("SELECT * FROM Destination WHERE bucketListName =:bucketListName")
+    @Query("SELECT * FROM Destination WHERE bucketListName =:bucketListName COLLATE NOCASE")
     List<Destination> getDestByBucketList(String bucketListName);
 }

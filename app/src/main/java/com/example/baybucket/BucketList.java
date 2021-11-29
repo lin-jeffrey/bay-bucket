@@ -30,8 +30,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,6 +45,8 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     TextView tv_latitude;
     TextView tv_longitude;
     LocationManager locationManager;
+    String bucketListName;
+    String bucketName;
 
     //db related
     DestinationRepository destinationRepository;
@@ -57,10 +57,11 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     TextView tv_progress;
 
     ProgressBar pb_loading;
-    Timer timer;
-    int count = 0;
 
-    public final static String TAG = "Success";
+    String fetchBucketListAPI_Key;
+    String fetchDistanceAPI_Key;
+
+    //public final static String TAG = "Success";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +74,16 @@ public class BucketList extends AppCompatActivity implements LocationListener {
         pb_bucketListProgress = findViewById(R.id.pb_bucketListProgress);
         tv_progress = findViewById(R.id.tv_progress);
         bucketList = new ArrayList<>();
+        bucketListName = getIntent().getExtras().getString("name");
+        bucketName = bucketListName;
+        bucketName = bucketName.replaceAll("%20", " ");
 
         destinationRepository = new DestinationRepository(this.getApplicationContext());
+
+        fetchBucketListAPI_Key = BuildConfig.FOURSQUARE_KEY;
+        fetchDistanceAPI_Key = BuildConfig.DISTANCE_MATRIX_KEY;
+
+
 
         //Add runtime permission for accessing current location
         if(ContextCompat.checkSelfPermission(BucketList.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -92,21 +101,22 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
         }
         check_destinationList();
-        showProgress();
     }
 
     private void showProgress() {
-        List<Destination> destinationList = destinationRepository.getAll();
+        List<Destination> destinationList = destinationRepository.getDestByBucketList(bucketName);
         int progress = destinationList.size() * 10;
+        //Log.i(TAG, "DESTINATION LIST SIZE: "+destinationList.size());
         if(destinationList.size() > 0){
             pb_bucketListProgress.setProgress(progress);
             tv_progress.setText(String.valueOf(progress)+" % complete");
-
+            pb_bucketListProgress.setVisibility(View.VISIBLE);
+            tv_progress.setVisibility(View.VISIBLE);
         }
     }
 
     private void check_destinationList() {
-        List<Destination> destinationList = destinationRepository.getDestByBucketList("San Francisco");
+        List<Destination> destinationList = destinationRepository.getDestByBucketList(bucketName);
         finishedItems = new ArrayList<String>();
         for(int i = 0; i < destinationList.size(); i++){
             String finishedItem = destinationList.get(i).getName();
@@ -133,8 +143,8 @@ public class BucketList extends AppCompatActivity implements LocationListener {
         final String URL_PREFIX = "https://api.foursquare.com/v3/places/search?";
         final String CATEGORIES = "&categories=16000";
         final String SORT_BY = "&sort=POPULARITY";
-        final String API_KEY = "fsq3ETkzlZ2aaky4SiCtLWknn8YDqtzaN7HYB8+JoPz9IqU=";
-        final String NEAR = "&near=san%20francisco";
+        final String API_KEY = fetchBucketListAPI_Key;
+        final String NEAR = "&near="+bucketListName;
 
         String url = URL_PREFIX + CATEGORIES + NEAR + SORT_BY;
 
@@ -213,8 +223,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
                             bucketListAdapter = new BucketListAdapter(getApplicationContext(), bucketList);
                             recyclerView.setAdapter(bucketListAdapter);
                             recyclerView.setVisibility(View.VISIBLE);
-                            pb_bucketListProgress.setVisibility(View.VISIBLE);
-                            tv_progress.setVisibility(View.VISIBLE);
+                            showProgress();
                             pb_loading.setVisibility(View.GONE);
                         }
                     });
@@ -227,7 +236,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
         String URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
         String ORIGINS = "origins="+latitude_curr+"%2C"+longitude_curr;
         String DESTINATIONS = "&destinations="+latitude_dest+"%2C"+longitude_dest;
-        String API_KEY = "&key=AIzaSyD_iZi1aRlx-gFmkuD9vLmGxH7SC2m_fAc";
+        String API_KEY = "&key="+fetchDistanceAPI_Key;
 
         String request_url = URL + ORIGINS + DESTINATIONS + API_KEY;
 
