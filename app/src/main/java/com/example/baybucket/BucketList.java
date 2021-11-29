@@ -83,6 +83,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
         destinationRepository = new DestinationRepository(this.getApplicationContext());
 
+
         changeMainImage();
 
         //fetch hidden API keys

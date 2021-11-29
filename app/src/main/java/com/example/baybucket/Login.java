@@ -75,6 +75,8 @@ public class Login extends AppCompatActivity {
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
+
     }
 
     public void Login(View view) {
@@ -114,6 +116,7 @@ public class Login extends AppCompatActivity {
                     //redirect to home activity
                     Intent intent = new Intent(Login.this, Home.class);
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     Toast.makeText(Login.this,"Invalid Email / Password. Please Retry!",Toast.LENGTH_LONG).show();
@@ -128,5 +131,6 @@ public class Login extends AppCompatActivity {
     public void onForgotPassword(View view) {
         Intent intent = new Intent(Login.this,ForgotPassword.class);
         startActivity(intent);
+        finish();
     }
 }

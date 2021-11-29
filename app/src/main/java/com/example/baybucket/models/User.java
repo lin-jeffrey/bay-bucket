@@ -9,27 +9,31 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey
     @NonNull
-    private String username;
-    @NonNull
     private String email;
     @NonNull
-    private String password;
+    private String username;
     private int points;
     private String imageUri;
 
-    public User(@NonNull String username, @NonNull String email, @NonNull String password){
+    @Ignore
+    public User(@NonNull String username, @NonNull String email){
         this.username = username;
         this.email = email;
-        this.password = password;
         this.points = 0;
         this.imageUri = "";
     }
 
-    @Ignore
-    public User(@NonNull String username, @NonNull String email, @NonNull String password, int points, String imageUri){
+    public User(@NonNull String username, @NonNull String email, int points){
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.points = points;
+        this.imageUri = "";
+    }
+
+    @Ignore
+    public User(@NonNull String username, @NonNull String email, int points, String imageUri){
+        this.username = username;
+        this.email = email;
         this.points = points;
         this.imageUri = imageUri;
     }
@@ -50,15 +54,6 @@ public class User {
     @NonNull
     public String getEmail() {
         return this.email;
-    }
-
-    public void setPassword(@NonNull String password) {
-        this.password = password;
-    }
-
-    @NonNull
-    public String getPassword() {
-        return this.password;
     }
 
     public void setPoints(int points) {

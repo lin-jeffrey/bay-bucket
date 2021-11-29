@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.example.baybucket.models.Memory;
 import com.example.baybucket.ui.profile.ProfileFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 import java.util.List;
@@ -25,13 +26,13 @@ public class MemoryRepository {
         memoryDatabase = Room.databaseBuilder(context, MemoryDatabase.class, DB_NAME).build();
     }
 
-    public void insertMemory(String username, String destinationName, Date checkInDate) {
-        Memory memory = new Memory(username, destinationName, checkInDate);
+    public void insertMemory(String email, String destinationName, String coordinates, Date checkInDate) {
+        Memory memory = new Memory(email, destinationName, coordinates, checkInDate);
         insertMemory(memory);
     }
 
-    public void insertMemory(String username, String destinationName, Date checkInDate, String caption, String imageUri) {
-        Memory memory = new Memory(username, destinationName, checkInDate, caption, imageUri);
+    public void insertMemory(String email, String destinationName, String coordinates, Date checkInDate, String caption, String imageUri) {
+        Memory memory = new Memory(email, destinationName, coordinates, checkInDate, caption, imageUri);
         insertMemory(memory);
     }
 
@@ -70,14 +71,14 @@ public class MemoryRepository {
         return list;
     }
 
-    public List<Memory> getMemoriesByUser(String username) {
+    public List<Memory> getMemoriesByUser(String email) {
         ExecutorService executorService =
                 new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
                         new LinkedBlockingQueue<>());
 
         List<Memory> list = null;
 
-        Callable<List<Memory>> callableTask = () -> memoryDatabase.memoryDao().getMemoriesByUser(username);
+        Callable<List<Memory>> callableTask = () -> memoryDatabase.memoryDao().getMemoriesByUser(email);
 
         Future<List<Memory>> future = executorService.submit(callableTask);
         try{
@@ -91,14 +92,14 @@ public class MemoryRepository {
         return list;
     }
 
-    public List<Memory> getMemoryByUserAndDest(String username, String destinationName) {
+    public List<Memory> getMemoryByUserAndDest(String email, String destinationName) {
         ExecutorService executorService =
                 new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
                         new LinkedBlockingQueue<>());
 
         List<Memory> list = null;
 
-        Callable<List<Memory>> callableTask = () -> memoryDatabase.memoryDao().getMemoryByUserAndDest(username, destinationName);
+        Callable<List<Memory>> callableTask = () -> memoryDatabase.memoryDao().getMemoryByUserAndDest(email, destinationName);
 
         Future<List<Memory>> future = executorService.submit(callableTask);
         try{

@@ -21,8 +21,8 @@
             android:icon="@drawable/baseline_leaderboard_24"
             android:title="@string/leaderboard" />
         <item
-            android:id="@+id/nav_account"
+            android:id="@+id/nav_logout"
             android:icon="@drawable/baseline_manage_accounts_20"
-            android:title="@string/account" />
+            android:title="@string/logout" />
     </group>
 </menu>

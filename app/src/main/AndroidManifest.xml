@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.baybucket">
-
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:required="false"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,12 +25,15 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ProfileActivity">
         </activity>
@@ -47,7 +54,6 @@
         <activity
             android:name=".RegisterActivity">
         </activity>
-
         <activity
             android:name=".ForgotPassword">
         </activity>
@@ -58,6 +64,21 @@
             android:name="distanceMatrixKey"
             android:value="${DISTANCE_MATRIX_KEY}"/>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.baybucket.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBux0cc8QIBkkmCQrJ4qYI3xvxGhEonz4A" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

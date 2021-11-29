@@ -26,9 +26,9 @@ public interface MemoryDao {
     @Query("SELECT * FROM Memory")
     List<Memory> getAll();
 
-    @Query("SELECT * FROM Memory WHERE username =:username")
-    List<Memory> getMemoriesByUser(String username);
+    @Query("SELECT * FROM Memory WHERE email =:email")
+    List<Memory> getMemoriesByUser(String email);
 
-    @Query("SELECT * FROM Memory WHERE username =:username AND destinationName =:destinationName")
-    List<Memory> getMemoryByUserAndDest(String username, String destinationName);
+    @Query("SELECT * FROM Memory WHERE email =:email AND destinationName =:destinationName")
+    List<Memory> getMemoryByUserAndDest(String email, String destinationName);
 }
