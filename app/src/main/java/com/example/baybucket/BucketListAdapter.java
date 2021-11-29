@@ -1,6 +1,7 @@
 package com.example.baybucket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,15 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         holder.listItemName.setText(bucketListItemsList.get(position).getBucketListItemName());
         holder.distance.setText(bucketListItemsList.get(position).getDistance());
         holder.cb_item.setChecked(bucketListItemsList.get(position).getVisited());
+
+        holder.listItemName.setOnClickListener(view -> {
+            Intent intentDestination = new Intent(view.getContext(), DestinationActivity.class);
+            intentDestination.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentDestination.putExtra("position", position);
+            intentDestination.putExtra("name", holder.listItemName.getText());
+            intentDestination.putExtra("distance", holder.distance.getText());
+            view.getContext().startActivity(intentDestination);
+        });
 
     }
 

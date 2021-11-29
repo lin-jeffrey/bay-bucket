@@ -6,19 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".DestinationActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:adjustViewBounds="true"
-        android:alpha=".75"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pier39" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:alpha=".75"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/pier39" />-->
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/destination_name"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
@@ -27,6 +27,7 @@
         android:text="Pier 39"
         android:textColor="@color/white"
         android:textSize="24dp"
+        android:background="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +40,7 @@
         android:layout_marginEnd="16dp"
         android:text="@string/loremIpsum"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView1" />
+        app:layout_constraintTop_toBottomOf="@id/destination_name" />
 
 <!--    <RelativeLayout-->
 <!--        android:id="@+id/icon_alert"-->
@@ -82,7 +83,7 @@
         android:layout_marginTop="16dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_distance"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:gravity="center_vertical"
@@ -96,7 +97,7 @@
         android:layout_width="25dp"
         android:layout_height="31dp"
         app:srcCompat="@drawable/icon_star"
-        app:layout_constraintStart_toEndOf="@id/textView3"
+        app:layout_constraintStart_toEndOf="@id/tv_distance"
         app:layout_constraintBottom_toBottomOf="@id/icon_car"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp" />
@@ -145,8 +146,9 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_car"
         app:layout_constraintBottom_toTopOf="@id/btn_arrived"
         android:layout_margin="16dp" />
 
