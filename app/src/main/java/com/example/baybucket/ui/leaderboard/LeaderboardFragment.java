@@ -12,19 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.baybucket.databinding.FragmentGalleryBinding;
+import com.example.baybucket.databinding.FragmentLeaderboardBinding;
 
 public class LeaderboardFragment extends Fragment {
 
     private LeaderboardViewModel leaderboardViewModel;
-    private FragmentGalleryBinding binding;
+    private FragmentLeaderboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         leaderboardViewModel =
                 new ViewModelProvider(this).get(LeaderboardViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentLeaderboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         /*
