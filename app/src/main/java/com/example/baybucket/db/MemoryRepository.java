@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.baybucket.models.Memory;
+import com.example.baybucket.ui.profile.ProfileFragment;
 
 import java.util.Date;
 import java.util.List;

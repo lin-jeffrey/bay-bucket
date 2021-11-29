@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="#FDFDF6"
-    tools:context=".ProfileActivity">
+    android:background="@color/light_green_background"
+    tools:context=".MemoryActivity">
 
     <ImageView
         android:id="@+id/memory_image"
@@ -17,6 +17,7 @@
         app:srcCompat="@drawable/default_profile_image"
         />
     <TextView
+        android:id="@+id/destination_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Destination"
@@ -32,7 +33,7 @@
         android:orientation="horizontal"
         android:gravity="center">
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/check_in_date"
             android:layout_width="0dp"
             android:layout_weight="1.75"
             android:layout_height="wrap_content"
@@ -40,30 +41,13 @@
             android:text="Date"
             android:textSize="18sp"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Time"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/temperature"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="90 F"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
     </LinearLayout>
 
     <TextView
+        android:id="@+id/memory_caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description: Description Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        android:text="Caption: Description Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
         android:textSize="18sp"
         android:textColor="@color/black"
         android:layout_gravity="left"

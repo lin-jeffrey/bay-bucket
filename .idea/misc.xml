@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-
         <entry key="app/src/main/res/layout/activity_bucket_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_destination.xml" value="0.335" />
 
@@ -46,7 +45,6 @@
         <entry key="app/src/main/res/menu/activity_home_drawer.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/menu/home.xml" value="0.1234375" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.24270833333333333" />
-
       </map>
     </option>
   </component>
