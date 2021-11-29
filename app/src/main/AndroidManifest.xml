@@ -48,6 +48,10 @@
             android:name=".RegisterActivity">
         </activity>
 
+        <activity
+            android:name=".ForgotPassword">
+        </activity>
+
     </application>
 
 </manifest>
