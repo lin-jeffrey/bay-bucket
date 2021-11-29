@@ -9,25 +9,38 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-
 import android.widget.SearchView;
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.baybucket.databinding.ActivityHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
+    //to access user that is logged in
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
+
+    private String userName="";
+    private String userEmail="";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,7 @@ public class Home extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -85,7 +99,27 @@ public class Home extends AppCompatActivity {
                 return false;
             }
         });
+        //Accessing user that is logged in
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserDetails userProfile = snapshot.getValue(UserDetails.class);
+                if(userProfile!=null){
+                    userName = userProfile.name;
+                    userEmail = userProfile.email;
+                  //  Toast.makeText(Home.this," login : "+userName,Toast.LENGTH_LONG).show();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Home.this,"Something went wrong in login",Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 
     private void doMySearch(String query) {
@@ -118,6 +152,7 @@ public class Home extends AppCompatActivity {
             default : Toast.makeText(this, "Sorry! " + query + " bucket list is not available. Please try some other city!", Toast.LENGTH_SHORT).show();
 
         }
+
     }
 
     private void logout() {
