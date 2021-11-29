@@ -17,12 +17,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 
-        // TODO delete me
-        // temporary for accessing destination & destination review screens
-        TextView tv_HelloWorld = findViewById(R.id.helloWorld);
-        tv_HelloWorld.setOnClickListener(view -> {
-            Intent intentDestination = new Intent(getApplicationContext(), DestinationActivity.class);
-            startActivity(intentDestination);
-        });
     }
 }

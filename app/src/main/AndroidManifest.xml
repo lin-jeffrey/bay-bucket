@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.baybucket">
-    
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:required="false"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false"/>
@@ -65,6 +64,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBux0cc8QIBkkmCQrJ4qYI3xvxGhEonz4A" />
     </application>
 
 </manifest>
