@@ -6,46 +6,51 @@ import androidx.room.Ignore;
 import androidx.room.TypeConverters;
 
 import com.example.baybucket.db.Converters;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(primaryKeys = {"username","destinationName"})
+@Entity(primaryKeys = {"email","destinationName"})
 public class Memory implements Serializable {
     @NonNull
-    private String username;
+    private String email;
     @NonNull
     private String destinationName;
+    @NonNull
+    private String coordinates;
     @NonNull
     @TypeConverters({Converters.class})
     private Date checkInDate;
     private String caption;
     private String imageUri;
 
-    public Memory(@NonNull String username, @NonNull String destinationName, @NonNull Date checkInDate){
-        this.username = username;
+    public Memory(@NonNull String email, @NonNull String destinationName, @NonNull String coordinates, @NonNull Date checkInDate){
+        this.email = email;
         this.destinationName = destinationName;
+        this.coordinates = coordinates;
         this.checkInDate = checkInDate;
         this.caption = "";
         this.imageUri = "";
     }
 
     @Ignore
-    public Memory(@NonNull String username, @NonNull String destinationName, @NonNull Date checkInDate, String caption, String imageUri){
-        this.username = username;
+    public Memory(@NonNull String email, @NonNull String destinationName, @NonNull String coordinates, @NonNull Date checkInDate, String caption, String imageUri){
+        this.email = email;
         this.destinationName = destinationName;
+        this.coordinates = coordinates;
         this.checkInDate = checkInDate;
         this.caption = caption;
         this.imageUri = imageUri;
     }
 
     @NonNull
-    public String getUsername() {
-        return this.username;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setUsername(@NonNull String username) {
-        this.username = username;
+    public void setEmail(@NonNull String email) {
+        this.email = email;
     }
 
     @NonNull
@@ -82,8 +87,12 @@ public class Memory implements Serializable {
         this.imageUri = imageUri;
     }
 
+    public String getCoordinates(){return this.coordinates;}
+
+    public void setCoordinates(String coordinates){this.coordinates = coordinates;}
+
     public void printMemory(){
-        String output = "Username: " + this.username + " DestinationName: " + this.destinationName + " CheckInDate: " + this.checkInDate +
+        String output = "Email: " + this.email + " DestinationName: " + this.destinationName + " CheckInDate: " + this.checkInDate +
                 " Caption: " + this.caption + " ImageUri: " + this.imageUri;
         System.out.println(output);
     }

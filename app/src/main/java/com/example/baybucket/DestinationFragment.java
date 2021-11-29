@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.example.baybucket.db.DestinationRepository;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -122,6 +124,22 @@ public class DestinationFragment extends DialogFragment {
     */
     private void persistDestinationMemory() {
         // DestinationDatabase addVisit
+        /* this is how memory data should be persisted -jeff
+
+        insert memory into local roomdb storage:
+            DestinationRepository destinationRepository = new DestinationRepository(getActivity());
+            Memory memory = new Memory(String userEmail, String destinationName, String coordinates, Date checkInDate, String caption, String imageUri)
+            destinationRepository.insert(memory);
+
+        notes about creating a memory object:
+            get userEmail from FirebaseAuth
+            coordinates must be formatted as "lat,long" OR you can use Converters.latLongToString(LatLng coordinates)
+
+        update user points on firebase:
+            https://firebase.google.com/docs/database/android/read-and-write
+            read firebase for current user point total
+            add x number of points to user point total and write to /users/uid/points
+        */
     }
 
     /*

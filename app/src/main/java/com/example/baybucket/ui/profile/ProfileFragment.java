@@ -20,9 +20,18 @@ import com.example.baybucket.ImageGridAdapter;
 import com.example.baybucket.MemoryActivity;
 import com.example.baybucket.R;
 import com.example.baybucket.databinding.FragmentProfileBinding;
+import com.example.baybucket.db.Converters;
+import com.example.baybucket.db.UserRepository;
 import com.example.baybucket.models.Memory;
 import com.example.baybucket.models.User;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,21 +46,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements OnMapReadyCallback{
     private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
 
     private GridView imageGrid;
     private ArrayList<Uri> uriList;
+    private ArrayList<Memory> memoryList = new ArrayList<Memory>();
 
     private String currentUsername;
-    private String currentEmail;
     private int currentPoints;
 
     private ImageView profile_image;
     private TextView username;
     private TextView points;
-    private MapView map;
+
+    private MapView mapView;
+    private GoogleMap mMap;
 
     private DatabaseReference mDatabase;
 
@@ -66,8 +77,15 @@ public class ProfileFragment extends Fragment {
         profile_image = (ImageView)root.findViewById(R.id.profile_picture);
         username = (TextView)root.findViewById(R.id.username);
         points = (TextView)root.findViewById(R.id.points);
-        map = (MapView)root.findViewById(R.id.map);
+
+        //memory image grid
         imageGrid = (GridView)root.findViewById(R.id.memories_grid);
+        uriList = new ArrayList<Uri>();
+
+        //map
+        mapView = (MapView)root.findViewById(R.id.map);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync((OnMapReadyCallback) this);
 
         //firebase db call for user info
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -81,7 +99,6 @@ public class ProfileFragment extends Fragment {
                 else {
                     Log.d("firebase", String.valueOf(task.getResult().child("name").getValue()));
                     currentUsername = String.valueOf(task.getResult().child("name").getValue());
-                    currentEmail = String.valueOf(task.getResult().child("email").getValue());
                     currentPoints = Integer.parseInt(String.valueOf(task.getResult().child("points").getValue()));
 
                     username.setText(currentUsername);
@@ -90,20 +107,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //map
-
-
-        //memory grid
-        uriList = new ArrayList<Uri>();
-
         //temp hard coded memories
         Date date =  new Date();
-        Memory memorySC = new Memory("Joe", "Santa Clara", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara");
-        Memory memorySF = new Memory("Joe", "San Francisco", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/san_francisco");
-        Memory memoryPA = new Memory("Joe", "Palo Alto", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/palo_alto");
-        Memory memorySJ = new Memory("Joe", "San Jose", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose");
+        Memory memorySC = new Memory("Joe@email.com", "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara");
+        Memory memorySF = new Memory("Joe@email.com", "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/san_francisco");
+        Memory memoryPA = new Memory("Joe@email.com", "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/paloalto");
+        Memory memorySJ = new Memory("Joe@email.com", "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose");
 
-        ArrayList<Memory> memoryList = new ArrayList<>();
         memoryList.add(memorySC);
         memoryList.add(memorySF);
         memoryList.add(memoryPA);
@@ -111,7 +121,7 @@ public class ProfileFragment extends Fragment {
 
         /* future db query to get memories
         MemoryRepository memoryRepository = new MemoryRepository(getActivity());
-        List<Memory> memoryList = memoryRepository.getMemoriesByUser(user.getUsername());
+        List<Memory> memoryList = memoryRepository.getMemoriesByUser(user.getEmail());
         */
         try {
             for(int i = 0; i < memoryList.size(); i++) {
@@ -131,10 +141,26 @@ public class ProfileFragment extends Fragment {
                 startActivity(i);
             }
         });
-
         return root;
     }
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        Log.i("TAG", "Map ready");
+        mMap = googleMap;
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        try {
+            for(int i = 0; i < memoryList.size(); i++) {
+                mMap.addMarker(new MarkerOptions().position(Converters.stringToLatLong(memoryList.get(i).getCoordinates())).title(memoryList.get(i).getDestinationName()));
+                builder.include(Converters.stringToLatLong(memoryList.get(i).getCoordinates()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        LatLngBounds bounds = builder.build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
+        mapView.onResume();
+    }
 
     @Override
     public void onDestroyView() {
