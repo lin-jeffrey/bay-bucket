@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.baybucket.db.DestinationRepository;
 import com.example.baybucket.models.Destination;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -95,6 +97,8 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
 
     void showDialog() {
         // Create the fragment and show it as a dialog.
+        CommonConfetti.rainingConfetti(findViewById(R.id.container), new int[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN })
+                .infinite();
         DialogFragment newFragment = DestinationFragment.newInstance(destinationName, destinationCoordinates, "FOO");
         newFragment.setShowsDialog(true);
         newFragment.show(getSupportFragmentManager(), "dialog");

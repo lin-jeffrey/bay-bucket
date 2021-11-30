@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import com.example.baybucket.db.MemoryRepository;
 import com.example.baybucket.models.Memory;
 import com.example.baybucket.models.User;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
