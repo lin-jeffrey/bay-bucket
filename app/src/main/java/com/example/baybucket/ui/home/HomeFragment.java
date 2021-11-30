@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     ImageButton sf, sc, scr, sj, b, pa;
 
     //db stuff
-    Destination myDestination;
+
     DestinationRepository destinationRepository;
 
     //String TAG = "HomeFragment";
@@ -104,12 +104,22 @@ public class HomeFragment extends Fragment {
       
         //Tanvi db stuff
         destinationRepository = new DestinationRepository(getContext());
-        myDestination = new Destination("Golden Gate National Recreation Area", "Golden Gate", "San Francisco", "san francisco");
-        myDestination = new Destination("Golden Gate Park", "501 Stanyan St", "Urban Park", "san francisco");
-        myDestination = new Destination("Ocean Beach", "Point Lobos Ave", "Beach", "San Francisco");
-        myDestination = new Destination("Catalpa Oaks County Park", "27725 Greenfield Rd", "Playground", "berkley");
-        myDestination = new Destination("San Pablo Park", "2800 Park St", "Playground", "berkeley");
-        destinationRepository.insertDestination(myDestination);
+        Destination myDestination_sf1 = new Destination("Presidio of San Francisco", "201 Fort Mason", "Playground", "san francisco");
+        Destination myDestination_sf2 = new Destination("Mission Dolores Park", "Point Lobos Ave", "Urban Park", "san francisco");
+        Destination myDestination_sf3 = new Destination("Fort Mason", "2 Marina Blvd", "Park", "San Francisco");
+        Destination myDestination_ber1 = new Destination("Berkeley Marina", "27725 Greenfield Rd", "Harbor", "berkeley");
+        Destination myDestination_ber2 = new Destination("Albany Bulb", "1 Buchanan St", "Park", "Berkeley");
+        Destination myDestination_sc1 = new Destination("Central Park", "909 Kiely Blvd", "Playground", "santa clara");
+        Destination myDestination_sc2 = new Destination("Lakewood Park", "834 Lakechime Dr", "Playground", "Santa Clara");
+        Destination myDestination_sj1 = new Destination("East Foothills", "San Jose", "Other Great Outdoors", "San Jose");
+        destinationRepository.insertDestination(myDestination_sf1);
+        destinationRepository.insertDestination(myDestination_sf2);
+        destinationRepository.insertDestination(myDestination_sf3);
+        destinationRepository.insertDestination(myDestination_ber1);
+        destinationRepository.insertDestination(myDestination_ber2);
+        destinationRepository.insertDestination(myDestination_sc1);
+        destinationRepository.insertDestination(myDestination_sc2);
+        destinationRepository.insertDestination(myDestination_sj1);
 
         //List<Destination> destinationList = destinationRepository.getAll();
         //Log.i(TAG, "Destination: "+destinationList.size());
