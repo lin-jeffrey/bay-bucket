@@ -14,5 +14,9 @@ public class UserDetails {
         this.points = Integer.toString(points);
     }
 
+    public String getPoints(){
+        return this.points;
+    }
+
 
 }

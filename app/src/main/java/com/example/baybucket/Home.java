@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -38,9 +39,10 @@ public class Home extends AppCompatActivity {
     private String userID;
 
     private String userName="";
-    private String userEmail="";
+    private String userPoints="";
 
-
+    private TextView nav_header_username;
+    private TextView nav_header_points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,11 @@ public class Home extends AppCompatActivity {
             logout();
             return true;
         });
+
+        //link navigation header ui elements
+        View headerView = navigationView.getHeaderView(0);
+        TextView nav_header_username = (TextView) headerView.findViewById(R.id.nav_header_username);
+        TextView nav_header_points = (TextView) headerView.findViewById(R.id.nav_header_points);
 
 
         // Passing each menu ID as a set of Ids because each
@@ -99,7 +106,7 @@ public class Home extends AppCompatActivity {
                 return false;
             }
         });
-        //Accessing user that is logged in
+        //Accessing user details of current user
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
@@ -109,8 +116,11 @@ public class Home extends AppCompatActivity {
                 UserDetails userProfile = snapshot.getValue(UserDetails.class);
                 if(userProfile!=null){
                     userName = userProfile.name;
-                    userEmail = userProfile.email;
-                  //  Toast.makeText(Home.this," login : "+userName,Toast.LENGTH_LONG).show();
+                    userPoints =  userProfile.points;
+
+                    //setting header text elements
+                    nav_header_username.setText(userName);
+                    nav_header_points.setText("Points: " + userPoints);
                 }
             }
 
