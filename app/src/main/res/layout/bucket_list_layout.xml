@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:buttonTint="#B0E596" />
+            android:buttonTint="#B0E596"
+            android:clickable="false"/>
 
         <TextView
             android:id="@+id/tv_activityName"
