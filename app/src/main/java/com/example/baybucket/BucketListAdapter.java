@@ -58,6 +58,8 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
             intentDestination.putExtra("position", position);
             intentDestination.putExtra("name", holder.listItemName.getText());
             intentDestination.putExtra("distance", holder.distance.getText());
+            intentDestination.putExtra("coordinates", bucketListItemsList.get(position).getLatLng());
+            // intentDestination.putExtra("bucket", bucket);
             view.getContext().startActivity(intentDestination);
         });
 
