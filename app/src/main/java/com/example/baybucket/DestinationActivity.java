@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.baybucket.db.DestinationRepository;
+import com.example.baybucket.models.Destination;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,11 +23,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 public class DestinationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     TextView tvName, tvDistance;
     Button btnArrived;
     MapView mapView;
+    ImageView main_image;
+    String destinationName;
+    String destinationDistance;
+    String destinationCoordinates;
+    int position;
 
     private GoogleMap mMap;
 
@@ -36,9 +46,12 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_destination);
 
         Intent intent = getIntent();
-        int position = intent.getIntExtra("int_value", -1);
-        String destinationName = getIntent().getExtras().getString("name");
-        String destinationDistance = getIntent().getExtras().getString("distance");
+        position = intent.getIntExtra("position", -1);
+        destinationName = getIntent().getExtras().getString("name");
+        destinationDistance = getIntent().getExtras().getString("distance");
+        destinationCoordinates = getIntent().getExtras().getString("coordinates");
+
+        changeMainImage();
 
         tvName = findViewById(R.id.destination_name);
         tvName.setText(destinationName);
@@ -54,9 +67,35 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         btnArrived.setOnClickListener(view -> showDialog());
     }
 
+    private void changeMainImage() {
+        main_image = findViewById(R.id.imageView_destination);
+        // TODO pass bucket name to destination
+        String bucketName = "san francisco";
+
+        if(bucketName.equals("san francisco")){
+            main_image.setBackgroundResource(R.drawable.sf_golden_gate);
+        }
+        else if(bucketName.equals("santa clara")){
+            main_image.setBackgroundResource(R.drawable.santa_clara_main);
+        }
+        else if(bucketName.equals("san jose")){
+            main_image.setBackgroundResource(R.drawable.san_jose_main);
+        }
+        else if(bucketName.equals("santa cruz")){
+            main_image.setBackgroundResource(R.drawable.santa_cruz_main);
+        }
+        else if(bucketName.equals("berkeley")){
+            main_image.setBackgroundResource(R.drawable.berkely_main);
+        }
+        else if(bucketName.equals("palo alto")){
+            main_image.setBackgroundResource(R.drawable.palo_alto_main);
+        }
+        main_image.requestLayout();
+    }
+
     void showDialog() {
         // Create the fragment and show it as a dialog.
-        DialogFragment newFragment = DestinationFragment.newInstance("CANCEL", "SUBMIT");
+        DialogFragment newFragment = DestinationFragment.newInstance(destinationName, destinationCoordinates, "FOO");
         newFragment.setShowsDialog(true);
         newFragment.show(getSupportFragmentManager(), "dialog");
     }
@@ -66,9 +105,13 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         Log.i(TAG, "Map ready");
         mMap = googleMap;
         // Add a marker on destination and move the camera
-        LatLng scu = new LatLng(37.35, -121.94); // TODO: change to destination coordinates
-        mMap.addMarker(new MarkerOptions().position(scu).title("Marker in SCU"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(scu,15));
+        String[] coordinates = destinationCoordinates.split(",");
+        double latitude = Double.parseDouble(coordinates[0]);
+        double longitude = Double.parseDouble(coordinates[1]);
+
+        LatLng latLng = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in " + destinationName));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
         mapView.onResume();
     }
 }

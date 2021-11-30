@@ -245,6 +245,8 @@ public class BucketList extends AppCompatActivity implements LocationListener {
                             //Log.i(TAG, "Distance: "+distance);
                             String distance_str = String.format("%.2f",distance);
                             item.setDistance(distance_str + " miles");
+                            item.setLatitude(latitude_dest);
+                            item.setLongitude(longitude_dest);
                             bucketList.add(item);
                         } catch (JSONException e) {
                             e.printStackTrace();

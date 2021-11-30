@@ -19,8 +19,8 @@
 
             <ImageView
                 android:id="@+id/destination_photo"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/edit_photo_image"
                 android:layout_column="1" />
 
@@ -32,18 +32,29 @@
                 android:layout_weight=".5">
 
                 <TextView
+
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/rating" />
+                    android:text="Name" />
 
-                <RatingBar
-                    android:id="@+id/simple_rating_bar"
+                <TextView
+                    android:id="@+id/tv_timestamp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:numStars="5"
-                    />
+                    android:gravity="center"
+                    android:text="Timestamp" />
+
+<!--                <RatingBar-->
+<!--                    android:id="@+id/simple_rating_bar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="left"-->
+<!--                    android:numStars="5"-->
+<!--                    />-->
 
             </LinearLayout>
 
