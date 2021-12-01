@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,8 +23,11 @@ import android.widget.Toast;
 
 import com.example.baybucket.db.MemoryRepository;
 import com.example.baybucket.models.Memory;
+import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +47,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     String destinationName;
     String destinationCoordinates;
     private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
     Date timestamp;
 
     String currentPhotoPath;
@@ -74,6 +80,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(view12 -> {
             persistDestinationMemory();
             // Intent back to AdapterList
+            CommonConfetti.rainingConfetti(findViewById(R.id.container), new int[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN })
+                    .oneShot();
         });
 
         btnTakePhoto.setOnClickListener(v1 -> {
@@ -172,7 +180,13 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         memoryRepository.insertMemory(memory);
 
         // TODO: update user points on firebase
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+        reference.child(userID);
+
         // TODO: save checkbox state
         // TODO: route back to bucket list
+
+        Toast.makeText(DestinationCheckInActivity.this, "Memory saved", Toast.LENGTH_SHORT).show();
     }
 }
