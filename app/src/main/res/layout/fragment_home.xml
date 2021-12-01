@@ -42,7 +42,7 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:padding="10dip"
+                        android:padding="0dip"
                         android:layout_height="fill_parent">
 
                         <ImageButton
@@ -59,7 +59,7 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:padding="10dip"
+                        android:padding="0dip"
                         android:layout_height="fill_parent">
 
                         <ImageButton
@@ -83,7 +83,7 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:padding="10dip"
+                        android:padding="0dip"
                         android:layout_height="fill_parent">
 
                         <ImageButton
@@ -100,7 +100,7 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:padding="10dip"
+                        android:padding="0dip"
                         android:layout_height="fill_parent">
 
                         <ImageButton
@@ -123,7 +123,7 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:padding="10dip"
+                        android:padding="0dip"
                         android:layout_height="fill_parent">
 
                         <ImageButton
@@ -140,7 +140,7 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:padding="10dip"
+                        android:padding="0dip"
                         android:layout_height="fill_parent">
 
                         <ImageButton
