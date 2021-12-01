@@ -165,10 +165,16 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     private void getLocation() {
         locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, BucketList.this);
+
+        //get location if location didn't change
+        Location myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        tv_latitude.setText(String.valueOf(myLocation.getLatitude()));
+        tv_longitude.setText(String.valueOf(myLocation.getLongitude()));
     }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        //this will only be called if location did change
         String latitude= String.valueOf(location.getLatitude());
         String longitude = String.valueOf(location.getLongitude());
         tv_latitude.setText(latitude);
