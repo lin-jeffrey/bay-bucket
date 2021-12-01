@@ -22,6 +22,7 @@ import com.example.baybucket.MemoryActivity;
 import com.example.baybucket.R;
 import com.example.baybucket.databinding.FragmentProfileBinding;
 import com.example.baybucket.db.Converters;
+import com.example.baybucket.db.MemoryRepository;
 import com.example.baybucket.db.UserRepository;
 import com.example.baybucket.models.Memory;
 import com.example.baybucket.models.User;
@@ -57,6 +58,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
 
     private String currentUsername;
     private int currentPoints;
+    private String currentEmail = "";
 
     private ImageView profile_image;
     private TextView username;
@@ -101,6 +103,9 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
                     Log.d("firebase", String.valueOf(task.getResult().child("name").getValue()));
                     currentUsername = String.valueOf(task.getResult().child("name").getValue());
                     currentPoints = Integer.parseInt(String.valueOf(task.getResult().child("points").getValue()));
+                    setCurrentEmail(String.valueOf(task.getResult().child("email").getValue()));
+                    Log.i("Tag", String.valueOf(task.getResult().child("email").getValue()));
+                    Log.i("Tag", currentEmail);
 
                     username.setText(currentUsername);
                     points.setText("Points: " + Integer.toString(currentPoints));
@@ -108,29 +113,33 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
             }
         });
 
+        // future db query to get memories
+        MemoryRepository memoryRepository = new MemoryRepository(getActivity());
+
+        //firebase call for user email
+        currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
         //temp hard coded memories
         Date date =  new Date();
-        Memory memorySC = new Memory("Joe@email.com", "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara_main");
-        Memory memorySF = new Memory("Joe@email.com", "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/pier39");
-        Memory memoryPA = new Memory("Joe@email.com", "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/palo_alto_main");
-        Memory memorySJ = new Memory("Joe@email.com", "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose_main");
-        Memory memoryBlankImage = new Memory("Joe@email.com", "Berkeley", "37.87170633038972,-122.26054864815632", date, "This was a fun day in Berkeley", "");
+        Memory memorySC = new Memory(currentEmail, "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara_main");
+        Memory memorySF = new Memory(currentEmail, "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/pier39");
+        Memory memoryPA = new Memory(currentEmail, "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/palo_alto_main");
+        Memory memorySJ = new Memory(currentEmail, "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose_main");
+        //Memory memoryBlankImage = new Memory("Joe@email.com", "Berkeley", "37.87170633038972,-122.26054864815632", date, "This was a fun day in Berkeley", "");
 
-        memoryList.add(memorySC);
-        memoryList.add(memorySF);
-        memoryList.add(memoryPA);
-        memoryList.add(memorySJ);
-        memoryList.add(memoryBlankImage);
+        memoryRepository.insertMemory(memorySC);
+        memoryRepository.insertMemory(memorySF);
+        memoryRepository.insertMemory(memoryPA);
+        memoryRepository.insertMemory(memorySJ);
+        //memoryList.add(memoryBlankImage);
 
-
-        /* future db query to get memories
-        MemoryRepository memoryRepository = new MemoryRepository(getActivity());
-        List<Memory> memoryList = memoryRepository.getMemoriesByUser(user.getEmail());
-        */
+        List<Memory> dbMemoryList = memoryRepository.getMemoriesByUser(currentEmail);
+        memoryList = new ArrayList<Memory>(dbMemoryList);
         try {
             for(int i = 0; i < memoryList.size(); i++) {
                 if(memoryList.get(i).getImageUri() != ""){
                     uriList.add(Uri.parse(memoryList.get(i).getImageUri()));
+                    Log.i("image", memoryList.get(i).getImageUri());
                 }
             }
         } catch (Exception e) {
@@ -142,13 +151,12 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
         imageGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //temp comment
-                //Intent i = new Intent(getActivity(), MemoryActivity.class);
-                //i.putExtra("Memory", memoryList.get(position));
-                //startActivity(i);
-
-                Intent i = new Intent(getActivity(), ImageTestActivity.class);
+                Intent i = new Intent(getActivity(), MemoryActivity.class);
+                i.putExtra("Memory", memoryList.get(position));
                 startActivity(i);
+
+                //Intent i = new Intent(getActivity(), ImageTestActivity.class);
+                //startActivity(i);
             }
         });
         return root;
@@ -159,16 +167,18 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
         Log.i("TAG", "Map ready");
         mMap = googleMap;
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        try {
-            for(int i = 0; i < memoryList.size(); i++) {
-                mMap.addMarker(new MarkerOptions().position(Converters.stringToLatLong(memoryList.get(i).getCoordinates())).title(memoryList.get(i).getDestinationName()));
-                builder.include(Converters.stringToLatLong(memoryList.get(i).getCoordinates()));
+        if(memoryList.size() != 0){
+            try {
+                for(int i = 0; i < memoryList.size(); i++) {
+                    mMap.addMarker(new MarkerOptions().position(Converters.stringToLatLong(memoryList.get(i).getCoordinates())).title(memoryList.get(i).getDestinationName()));
+                    builder.include(Converters.stringToLatLong(memoryList.get(i).getCoordinates()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            LatLngBounds bounds = builder.build();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
         }
-        LatLngBounds bounds = builder.build();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
         mapView.onResume();
     }
 
@@ -176,5 +186,9 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void setCurrentEmail(String email){
+        this.currentEmail = email;
     }
 }
