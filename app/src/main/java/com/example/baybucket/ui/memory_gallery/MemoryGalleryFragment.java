@@ -44,10 +44,10 @@ public class MemoryGalleryFragment extends Fragment {
 
         //temp hard coded memories
         Date date =  new java.util.Date();
-        Memory memorySC = new Memory("Joe@email.com", "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara");
-        Memory memorySF = new Memory("Joe@email.com", "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/san_francisco");
-        Memory memoryPA = new Memory("Joe@email.com", "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/paloalto");
-        Memory memorySJ = new Memory("Joe@email.com", "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose");
+        Memory memorySC = new Memory("Joe@email.com", "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara_main");
+        Memory memorySF = new Memory("Joe@email.com", "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/pier39");
+        Memory memoryPA = new Memory("Joe@email.com", "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/palo_alto_main");
+        Memory memorySJ = new Memory("Joe@email.com", "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose_main");
 
         ArrayList<Memory> memoryList = new ArrayList<>();
         memoryList.add(memorySC);

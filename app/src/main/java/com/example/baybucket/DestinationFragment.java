@@ -2,24 +2,24 @@ package com.example.baybucket;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -32,13 +32,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.baybucket.db.MemoryRepository;
 import com.example.baybucket.models.Memory;
-import com.example.baybucket.models.User;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -290,15 +288,11 @@ public class DestinationFragment extends DialogFragment {
 
                     checkCameraPermission();
                     Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (takePhoto.resolveActivity(getContext().getPackageManager()) != null) {
-//                        Uri photoURI = FileProvider.getUriForFile(getContext(),
-//                                "com.example.baybucket.fileprovider",
-//                                photoFile);
-//                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        activityResultLauncher.launch(takePhoto);
-                    } else {
-                        Log.i(TAG, "No image capture functionality available");
-                        Toast.makeText(getContext(), "No image capture functionality available", Toast.LENGTH_SHORT).show();
+                    try {
+                        startActivityForResult(takePhoto, 1);
+
+                    } catch (ActivityNotFoundException e) {
+                        // display error state to the user
                     }
 
                 } else if (options[item].equals("Choose from Gallery")) {
@@ -318,6 +312,59 @@ public class DestinationFragment extends DialogFragment {
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "this happens fragment activity result");
+        Log.i(TAG, String.valueOf(data.getExtras()));
+        Log.i(TAG, String.valueOf(requestCode));
+        Log.i(TAG, String.valueOf(resultCode));
+        if (resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            if (imageBitmap == null) {
+                Log.i(TAG, "got image");
+
+            } else {
+                Log.i(TAG, "no image");
+            }
+            iv_photo.setImageBitmap(imageBitmap);
+        }
+
+        /*
+        if(resultCode != 0) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        iv_photo.setImageBitmap(selectedImage);
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage =  data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                iv_photo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                cursor.close();
+                            }
+                        }
+
+                    }
+                    break;
+            }
+
+         */
+        }
     }
 
 
@@ -346,4 +393,3 @@ public class DestinationFragment extends DialogFragment {
 //            }
 //        }
 //    }
-}

@@ -3,8 +3,11 @@ package com.example.baybucket;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +42,8 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
     int position;
 
     private GoogleMap mMap;
+
+    DialogFragment newFragment;
 
     private static final String TAG = "DestinationActivity";
 
@@ -99,7 +104,7 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         // Create the fragment and show it as a dialog.
         CommonConfetti.rainingConfetti(findViewById(R.id.container), new int[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN })
                 .infinite();
-        DialogFragment newFragment = DestinationFragment.newInstance(destinationName, destinationCoordinates, "FOO");
+        newFragment = DestinationFragment.newInstance(destinationName, destinationCoordinates, "FOO");
         newFragment.setShowsDialog(true);
         newFragment.show(getSupportFragmentManager(), "dialog");
     }
@@ -117,5 +122,13 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in " + destinationName));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
         mapView.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        newFragment.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "this happens activity activity result");
+
     }
 }
