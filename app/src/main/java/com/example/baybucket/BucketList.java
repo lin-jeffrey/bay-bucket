@@ -241,12 +241,13 @@ public class BucketList extends AppCompatActivity implements LocationListener {
                             String longitude_dest = main.getString("longitude");
                             String latitude_curr = tv_latitude.getText().toString();
                             String longitude_curr = tv_longitude.getText().toString();
-                            double distance = calculateDistance(latitude_dest, longitude_dest, latitude_curr, longitude_curr) * 0.00062137;
+                            double distance = calculateDistance(latitude_dest, longitude_dest, latitude_curr, longitude_curr);
                             //Log.i(TAG, "Distance: "+distance);
                             String distance_str = String.format("%.2f",distance);
                             item.setDistance(distance_str + " miles");
                             item.setLatitude(latitude_dest);
                             item.setLongitude(longitude_dest);
+                            item.setBucketListName(bucketName);
                             bucketList.add(item);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -271,32 +272,29 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     }
 
     private double calculateDistance(String latitude_dest, String longitude_dest, String latitude_curr, String longitude_curr) throws IOException, JSONException {
-        String URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-        String ORIGINS = "origins="+latitude_curr+"%2C"+longitude_curr;
-        String DESTINATIONS = "&destinations="+latitude_dest+"%2C"+longitude_dest;
-        String API_KEY = "&key="+fetchDistanceAPI_Key;
+        double latitude_dest_d = Double.parseDouble(latitude_dest);
+        double longitude_dest_d = Double.parseDouble(longitude_dest);
+        double latitude_curr_d = Double.parseDouble(latitude_curr);
+        double longitude_curr_d = Double.parseDouble(longitude_curr);
 
-        String request_url = URL + ORIGINS + DESTINATIONS + API_KEY;
+        longitude_dest_d = Math.toRadians(longitude_dest_d);
+        longitude_curr_d = Math.toRadians(longitude_curr_d);
+        latitude_dest_d = Math.toRadians(latitude_dest_d);
+        latitude_curr_d = Math.toRadians(latitude_curr_d);
 
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        Request request = new Request.Builder()
-                .url(request_url)
-                .method("GET", null)
-                .build();
-        double distance = 0;
-        try {
-            Response response = client.newCall(request).execute();
-            String data = response.body().string();
-            //Log.i(TAG, "here's the response: "+data);
-            JSONObject jsonObject = new JSONObject(data);
-            distance = Double.valueOf(jsonObject.getJSONArray("rows").getJSONObject(0)
-                    .getJSONArray("elements").getJSONObject(0)
-                    .getJSONObject("distance").get("value").toString());
-            //Log.i(TAG, "Distance in metres: "+distance);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return distance;
+        double dlon = longitude_curr_d - longitude_dest_d;
+        double dlat = latitude_curr_d - latitude_dest_d;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(latitude_curr_d) * Math.cos(latitude_dest_d)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        // Radius of earth
+        double r = 3956;
+
+        // calculate the result
+        return(c * r);
+
     }
 }

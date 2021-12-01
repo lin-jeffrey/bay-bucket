@@ -39,6 +39,7 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
     String destinationName;
     String destinationDistance;
     String destinationCoordinates;
+    String destinationBucket;
     int position;
 
     private GoogleMap mMap;
@@ -57,6 +58,7 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         destinationName = getIntent().getExtras().getString("name");
         destinationDistance = getIntent().getExtras().getString("distance");
         destinationCoordinates = getIntent().getExtras().getString("coordinates");
+        destinationBucket = getIntent().getExtras().getString("bucket");
 
         changeMainImage();
 
@@ -71,31 +73,36 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         mapView.getMapAsync(this);
 
         btnArrived = findViewById(R.id.btn_arrived);
-        btnArrived.setOnClickListener(view -> showDialog());
+        btnArrived.setOnClickListener(view -> {
+            Intent intentDestination = new Intent(DestinationActivity.this, DestinationCheckInActivity.class);
+            intentDestination.putExtra("name", destinationName);
+            intentDestination.putExtra("coordinates", destinationCoordinates);
+            view.getContext().startActivity(intentDestination);
+        });
     }
 
     private void changeMainImage() {
         main_image = findViewById(R.id.imageView_destination);
-        // TODO pass bucket name to destination
-        String bucketName = "san francisco";
 
-        if(bucketName.equals("san francisco")){
-            main_image.setBackgroundResource(R.drawable.sf_golden_gate);
-        }
-        else if(bucketName.equals("santa clara")){
-            main_image.setBackgroundResource(R.drawable.santa_clara_main);
-        }
-        else if(bucketName.equals("san jose")){
-            main_image.setBackgroundResource(R.drawable.san_jose_main);
-        }
-        else if(bucketName.equals("santa cruz")){
-            main_image.setBackgroundResource(R.drawable.santa_cruz_main);
-        }
-        else if(bucketName.equals("berkeley")){
-            main_image.setBackgroundResource(R.drawable.berkely_main);
-        }
-        else if(bucketName.equals("palo alto")){
-            main_image.setBackgroundResource(R.drawable.palo_alto_main);
+        switch (destinationBucket) {
+            case "san francisco":
+                main_image.setBackgroundResource(R.drawable.sf_golden_gate);
+                break;
+            case "santa clara":
+                main_image.setBackgroundResource(R.drawable.santa_clara_main);
+                break;
+            case "san jose":
+                main_image.setBackgroundResource(R.drawable.san_jose_main);
+                break;
+            case "santa cruz":
+                main_image.setBackgroundResource(R.drawable.santa_cruz_main);
+                break;
+            case "berkeley":
+                main_image.setBackgroundResource(R.drawable.berkely_main);
+                break;
+            case "palo alto":
+                main_image.setBackgroundResource(R.drawable.palo_alto_main);
+                break;
         }
         main_image.requestLayout();
     }

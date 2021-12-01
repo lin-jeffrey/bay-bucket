@@ -55,7 +55,7 @@ public class Home extends AppCompatActivity {
         binding.appBarHome.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Select any of the available locations to view a list of the must-see places in the city.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
