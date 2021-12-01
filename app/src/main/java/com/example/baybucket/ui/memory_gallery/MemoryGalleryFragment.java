@@ -3,6 +3,7 @@ package com.example.baybucket.ui.memory_gallery;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,15 @@ import com.example.baybucket.ImageGridAdapter;
 import com.example.baybucket.MemoryActivity;
 import com.example.baybucket.R;
 import com.example.baybucket.databinding.FragmentMemoryGalleryBinding;
+import com.example.baybucket.db.MemoryRepository;
 import com.example.baybucket.models.Memory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MemoryGalleryFragment extends Fragment {
 
@@ -30,6 +35,10 @@ public class MemoryGalleryFragment extends Fragment {
 
     private GridView imageGrid;
     private ArrayList<Uri> uriList;
+
+    private ArrayList<Memory> memoryList = new ArrayList<Memory>();
+
+    private String userEmail;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,26 +51,20 @@ public class MemoryGalleryFragment extends Fragment {
         imageGrid = (GridView)root.findViewById(R.id.memories_grid);
         uriList = new ArrayList<Uri>();
 
-        //temp hard coded memories
-        Date date =  new java.util.Date();
-        Memory memorySC = new Memory("Joe@email.com", "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara");
-        Memory memorySF = new Memory("Joe@email.com", "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/san_francisco");
-        Memory memoryPA = new Memory("Joe@email.com", "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/paloalto");
-        Memory memorySJ = new Memory("Joe@email.com", "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose");
+        //firebase call for user email
+        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        ArrayList<Memory> memoryList = new ArrayList<>();
-        memoryList.add(memorySC);
-        memoryList.add(memorySF);
-        memoryList.add(memoryPA);
-        memoryList.add(memorySJ);
-
-        /* future db query to get memories
+        //local memory db call
         MemoryRepository memoryRepository = new MemoryRepository(getActivity());
-        List<Memory> memoryList = memoryRepository.getMemoriesByUser(user.getEmail());
-        */
+        List<Memory> dbMemoryList = memoryRepository.getMemoriesByUser(userEmail);
+        memoryList = new ArrayList<Memory>(dbMemoryList);
+
         try {
             for(int i = 0; i < memoryList.size(); i++) {
-                uriList.add(Uri.parse(memoryList.get(i).getImageUri()));
+                if(memoryList.get(i).getImageUri() != ""){
+                    uriList.add(Uri.parse(memoryList.get(i).getImageUri()));
+                }
+                Log.i("tag", memoryList.get(i).getImageUri());
             }
         } catch (Exception e) {
             e.printStackTrace();
