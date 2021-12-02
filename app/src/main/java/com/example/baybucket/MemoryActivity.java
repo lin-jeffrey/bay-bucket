@@ -2,6 +2,7 @@ package com.example.baybucket;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +35,14 @@ public class MemoryActivity extends AppCompatActivity {
         tv_date = findViewById(R.id.check_in_date);
         tv_caption = findViewById(R.id.memory_caption);
 
-        iv_image.setImageURI(Uri.parse(memory.getImageUri()));
+
+        if(memory.getImageUri().length() != 0){
+            iv_image.setImageURI(Uri.parse(memory.getImageUri()));
+        }
+        else{
+            Log.i("debug", "default image");
+            iv_image.setImageURI(Uri.parse("android.resource://com.example.baybucket/drawable/default_image"));
+        }
         tv_destination.setText(memory.getDestinationName());
         tv_date.setText(Converters.dateToTimeStamp(memory.getCheckInDate()));
         tv_caption.setText(memory.getCaption());

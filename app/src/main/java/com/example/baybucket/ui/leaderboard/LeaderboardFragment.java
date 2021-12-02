@@ -96,20 +96,20 @@ public class LeaderboardFragment extends Fragment {
             TextView t1v = new TextView(getActivity());
             t1v.setText(Integer.toString(i+1));
             t1v.setGravity(Gravity.CENTER);
-            t1v.setTextSize(18);
-            t1v.setPadding(40, 20, 10, 20 );
+            t1v.setTextSize(20);
+            t1v.setPadding(30, 20, 10, 30 );
             tbrow.addView(t1v);
             TextView t2v = new TextView(getActivity());
             t2v.setText(userDetailsList.get(i).name);
             t2v.setGravity(Gravity.CENTER);
-            t2v.setTextSize(18);
-            t2v.setPadding(325, 20, 325, 20 );
+            t2v.setTextSize(20);
+            t2v.setPadding(280, 20, 280, 30 );
             tbrow.addView(t2v);
             TextView t3v = new TextView(getActivity());
             t3v.setText(userDetailsList.get(i).points);
             t3v.setGravity(Gravity.CENTER);
-            t3v.setTextSize(18);
-            t3v.setPadding(10, 20, 40, 20 );
+            t3v.setTextSize(20);
+            t3v.setPadding(10, 20, 30, 30 );
             tbrow.addView(t3v);
             table_main.addView(tbrow);
         }

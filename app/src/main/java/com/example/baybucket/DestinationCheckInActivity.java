@@ -1,5 +1,6 @@
 package com.example.baybucket;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,8 +29,12 @@ import com.example.baybucket.db.UserRepository;
 import com.example.baybucket.models.Memory;
 import com.example.baybucket.models.User;
 import com.github.jinatonic.confetti.CommonConfetti;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,12 +58,13 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     String destinationName, destinationCoordinates, destinationBucket;
 
     private FirebaseUser user;
-    private DatabaseReference reference;
     private String userID;
     Date timestamp;
 
     String currentPhotoPath;
     Uri photoURI;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +97,12 @@ public class DestinationCheckInActivity extends AppCompatActivity {
             persistDestinationMemory();
 
             // Intent back to AdapterList
+            /*
             destinationBucket = destinationBucket.replaceAll("\\s", "%20");
             Intent intent = new Intent(DestinationCheckInActivity.this, BucketList.class);
             intent.putExtra("name", destinationBucket);
-            startActivity(intent);
+            startActivity(intent);*/
+            finish();
         });
 
         btnTakePhoto.setOnClickListener(v1 -> {
@@ -189,30 +198,50 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
         timestamp = new Date(System.currentTimeMillis());
 
-        // what to do with empty URI?
+        // add memory into roomDB
         MemoryRepository memoryRepository = new MemoryRepository(this);
         Memory memory;
-        if (etDescription.getText().toString().isEmpty() || photoURI == null) {
+        if (etDescription.getText().toString().isEmpty()) {
+            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, "", photoURI.toString());
+        }
+        else if(photoURI == null){
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
-        } else {
+        }else {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
         }
         Log.i("tag", user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
         memoryRepository.insertMemory(memory);
 
-        // TODO: save checkbox state
-        // BucketListItems setVisited
+        // update visited destinations on roomDB
+        DestinationRepository destinationRepository = new DestinationRepository(this);
+        destinationRepository.insertDestination(destinationName, destinationBucket);
 
-        // TODO: update user points on firebase
-//        reference = FirebaseDatabase.getInstance().getReference("Users");
-//        userID = user.getUid();
-//        reference.child(userID);
-
-        // save user points (local)
-//        UserRepository userRepository = new UserRepository(this);
-//        User currentUser = userRepository.getUserByEmail(user.getEmail()).get(0);
-//        currentUser.addPoints(10);
+        // update user points on roomDB and on firebase
+        addPoints();
 
         Toast.makeText(DestinationCheckInActivity.this, "Memory saved", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addPoints(){
+        int currentUserPoints;
+        int updatedUserPoints;
+
+        //get user points locally
+        UserRepository userRepository = new UserRepository(this);
+        List<User> currentUserList = userRepository.getUserByEmail(user.getEmail());
+        currentUserPoints = currentUserList.get(0).getPoints();
+        Log.i("debug", String.valueOf(currentUserPoints));
+
+        updatedUserPoints = currentUserPoints + 25;
+        Log.i("debug", Integer.toString(updatedUserPoints));
+
+        //updates user points on firebase with local user points + 25
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("Users").child(userID).child("points").setValue(Integer.toString(updatedUserPoints));
+
+        //update local user with point total
+        currentUserList.get(0).setPoints(updatedUserPoints);
+        userRepository.updateUser(currentUserList.get(0));
     }
 }

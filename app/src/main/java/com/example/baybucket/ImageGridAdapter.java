@@ -40,7 +40,6 @@ public class ImageGridAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-
         imageView.setImageURI(this.uriList.get(position));
         return imageView;
     }
