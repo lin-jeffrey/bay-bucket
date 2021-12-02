@@ -94,7 +94,7 @@ public class LeaderboardFragment extends Fragment {
         for (int i = 0; i < userDetailsList.size(); i++) {
             TableRow tbrow = new TableRow(getActivity());
             TextView t1v = new TextView(getActivity());
-            t1v.setText(Integer.toString(i));
+            t1v.setText(Integer.toString(i+1));
             t1v.setGravity(Gravity.CENTER);
             t1v.setTextSize(18);
             t1v.setPadding(40, 20, 10, 20 );

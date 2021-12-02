@@ -16,51 +16,15 @@ public class Destination implements Serializable {
     @PrimaryKey
     @NonNull
     private String name;
-    private String address;
-    private String description;
     @NonNull
     private String bucketListName;
-    private int visits;
-    @TypeConverters({Converters.class})
-    private ArrayList<Integer> ratings;
 
-    public Destination(@NonNull String name, String address, String description, @NonNull String bucketListName){
+    public Destination(@NonNull String name, @NonNull String bucketListName){
         this.name = name;
-        this.address = address;
-        this.description = description;
         this.bucketListName = bucketListName;
-        this.ratings = new ArrayList<>();
-        this.visits = 0;
-    }
-    @Ignore
-    public Destination(@NonNull String name, String address, String description, @NonNull String bucketListName, ArrayList<Integer> ratings, int visits){
-        this.name = name;
-        this.address = address;
-        this.description = description;
-        this.bucketListName = bucketListName;
-        this.ratings = ratings;
-        this.visits = visits;
     }
 
-    public void addRating(Integer rating){
-        this.ratings.add(rating);
-    }
-
-    public ArrayList<Integer> getRatings(){
-        return this.ratings;
-    }
-
-    public void setRatings(ArrayList<Integer> ratings){
-        this.ratings = ratings;
-    }
-
-    public double getAvgRating(){
-        return ratings.stream()
-                .mapToDouble(d -> d)
-                .average()
-                .orElse(0.0);
-    }
-
+    @NonNull
     public String getBucketListName() {
         return this.bucketListName;
     }
@@ -78,37 +42,8 @@ public class Destination implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getVisits() {
-        return this.visits;
-    }
-
-    public void setVisits(int visits){
-        this.visits = visits;
-    }
-
-    public void addVisit() {
-        this.visits = this.visits + 1;
-    }
-
     public void printDestination(){
-        String output = "Name: " + this.name + " Address: " + this.address + " Description: " + this.description +
-                " BucketListName: " + this.bucketListName + " Rating: " + this.getRatings() + " Visits: " + this.visits;
+        String output = "Name: " + this.name + " BucketListName: " + this.bucketListName;
         System.out.println(output);
     }
 }
