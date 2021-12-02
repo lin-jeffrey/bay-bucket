@@ -54,7 +54,6 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_destination);
 
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", -1);
         destinationName = getIntent().getExtras().getString("name");
         destinationDistance = getIntent().getExtras().getString("distance");
         destinationCoordinates = getIntent().getExtras().getString("coordinates");
@@ -76,6 +75,7 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         btnArrived.setOnClickListener(view -> {
             Intent intentDestination = new Intent(DestinationActivity.this, DestinationCheckInActivity.class);
             intentDestination.putExtra("name", destinationName);
+            intentDestination.putExtra("distance", destinationDistance);
             intentDestination.putExtra("coordinates", destinationCoordinates);
             intentDestination.putExtra("bucket", destinationBucket);
             startActivity(intentDestination);
@@ -132,11 +132,4 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
         mapView.onResume();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        newFragment.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "this happens activity activity result");
-
-    }
 }

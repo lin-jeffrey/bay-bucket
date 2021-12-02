@@ -55,7 +55,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     EditText etDescription;
 
     TextView tv_timestamp, tv_name;
-    String destinationName, destinationCoordinates, destinationBucket;
+    String destinationName, destinationCoordinates, destinationBucket, destinationDistance;
 
     private FirebaseUser user;
     private String userID;
@@ -72,6 +72,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_destination_check_in);
 
         destinationName = getIntent().getExtras().getString("name");
+        destinationDistance = getIntent().getExtras().getString("distance");
         destinationCoordinates = getIntent().getExtras().getString("coordinates");
         destinationBucket = getIntent().getExtras().getString("bucket");
 
@@ -86,8 +87,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         // get coordinates
 
         btnCancel.setOnClickListener(v -> {
-            //Intent intent = new Intent(this, RegisterActivity.class);
-            //startActivity(intent);
+            backToDestination();
         });
 
         btnSubmit.setOnClickListener(view12 -> {
@@ -96,13 +96,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
             persistDestinationMemory();
 
-            // Intent back to AdapterList
-            /*
-            destinationBucket = destinationBucket.replaceAll("\\s", "%20");
-            Intent intent = new Intent(DestinationCheckInActivity.this, BucketList.class);
-            intent.putExtra("name", destinationBucket);
-            startActivity(intent);*/
-            finish();
+            backToList();
         });
 
         btnTakePhoto.setOnClickListener(v1 -> {
@@ -137,6 +131,24 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 //                Toast.makeText(DestinationCheckInActivity.this, "Cannot pick image", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+    }
+
+    private void backToDestination() {
+        // Intent back to DestinationActivity
+        Intent intentDestination = new Intent(this, DestinationActivity.class);
+        intentDestination.putExtra("name", destinationName);
+        intentDestination.putExtra("distance", destinationDistance);
+        intentDestination.putExtra("coordinates", destinationCoordinates);
+        intentDestination.putExtra("bucket", destinationBucket);
+        startActivity(intentDestination);
+    }
+
+    private void backToList() {
+        // Intent back to AdapterList
+        String destinationBucketName = destinationBucket.replaceAll("\\s", "%20");
+        Intent intentList = new Intent(this, BucketList.class);
+        intentList.putExtra("name", destinationBucketName);
+        startActivity(intentList);
     }
 
     private void checkCameraPermission() {
@@ -195,24 +207,21 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     private void persistDestinationMemory() {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         timestamp = new Date(System.currentTimeMillis());
 
-        // add memory into roomDB
+        // Persist memory
         MemoryRepository memoryRepository = new MemoryRepository(this);
         Memory memory;
-        if (etDescription.getText().toString().isEmpty()) {
-            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, "", photoURI.toString());
-        }
-        else if(photoURI == null){
+        if (photoURI == null) {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
         }else {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
         }
-        Log.i("tag", user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
+        Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
         memoryRepository.insertMemory(memory);
 
-        // update visited destinations on roomDB
+        // Persist destination
+
         DestinationRepository destinationRepository = new DestinationRepository(this);
         destinationRepository.insertDestination(destinationName, destinationBucket);
 
