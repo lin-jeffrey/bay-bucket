@@ -35,7 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DestinationCheckInActivity extends AppCompatActivity {
 
@@ -185,6 +187,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        timestamp = new Date(System.currentTimeMillis());
+
         // what to do with empty URI?
         MemoryRepository memoryRepository = new MemoryRepository(this);
         Memory memory;
@@ -193,6 +197,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         } else {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
         }
+        Log.i("tag", user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
         memoryRepository.insertMemory(memory);
 
         // TODO: save checkbox state
