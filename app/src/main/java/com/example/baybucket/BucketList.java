@@ -158,6 +158,9 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             tv_progress.setText(String.valueOf(progress)+" % complete");
             pb_bucketListProgress.setVisibility(View.VISIBLE);
             tv_progress.setVisibility(View.VISIBLE);
+            ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+            params.height=1300;
+            recyclerView.setLayoutParams(params);
         }
     }
 
