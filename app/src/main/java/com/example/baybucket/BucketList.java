@@ -43,8 +43,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class BucketList extends AppCompatActivity implements LocationListener {
-
-    private static final String TAG = "BUCKET LIST PAGE";
     List<BucketListItems> bucketList;
     RecyclerView recyclerView;
     BucketListAdapter bucketListAdapter;
@@ -95,7 +93,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             fetchBucketListAPI_Key = bundle.getString("fourSquareKey");
-            //Log.i(TAG, "Bucket List API Key: "+fetchBucketListAPI_Key);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,8 +111,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             getLocation();
         }
 
-
-
         try {
             loadBucketListItems();
         } catch (IOException e) {
@@ -126,12 +121,10 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
     private void changeMainImage() {
         main_image = findViewById(R.id.main_image);
-        //Log.i(TAG, "changeMainImage: "+bucketName);
         if(bucketName.equals("san francisco")){
             main_image.setImageResource(R.drawable.sf_golden_gate);
         }
         else if(bucketName.equals("santa clara")){
-            Log.i(TAG, "changeMainImage: "+bucketName);
             main_image.setImageResource(R.drawable.santa_clara_main);
         }
         else if(bucketName.equals("san jose")){
@@ -166,15 +159,12 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     }
 
     private void check_destinationList() {
-        Log.i(TAG, "Inside check_destinationList");
         List<Destination> destinationList = destinationRepository.getDestByBucketList(bucketName);
-        Log.i(TAG, "DATA FROM DB"+destinationRepository.getAll().size());
         finishedItems = new ArrayList<String>();
         if(destinationList != null){
             for(int i = 0; i < destinationList.size(); i++){
                 String finishedItem = destinationList.get(i).getName();
                 finishedItems.add(finishedItem);
-                Log.i(TAG, "Visited Place: "+finishedItem);
             }
         }
 
