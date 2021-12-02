@@ -21,8 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.baybucket.db.DestinationRepository;
 import com.example.baybucket.db.MemoryRepository;
+import com.example.baybucket.db.UserRepository;
 import com.example.baybucket.models.Memory;
+import com.example.baybucket.models.User;
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,8 +47,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     EditText etDescription;
 
     TextView tv_timestamp, tv_name;
-    String destinationName;
-    String destinationCoordinates;
+    String destinationName, destinationCoordinates, destinationBucket;
+
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -61,6 +64,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
         destinationName = getIntent().getExtras().getString("name");
         destinationCoordinates = getIntent().getExtras().getString("coordinates");
+        destinationBucket = getIntent().getExtras().getString("bucket");
 
         mainImage = findViewById(R.id.check_in_image_view);
         btnTakePhoto = findViewById(R.id.take_image_button);
@@ -78,10 +82,16 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         });
 
         btnSubmit.setOnClickListener(view12 -> {
-            persistDestinationMemory();
-            // Intent back to AdapterList
             CommonConfetti.rainingConfetti(findViewById(R.id.container), new int[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN })
-                    .oneShot();
+                    .infinite();
+
+            persistDestinationMemory();
+
+            // Intent back to AdapterList
+            destinationBucket = destinationBucket.replaceAll("\\s", "%20");
+            Intent intent = new Intent(DestinationCheckInActivity.this, BucketList.class);
+            intent.putExtra("name", destinationBucket);
+            startActivity(intent);
         });
 
         btnTakePhoto.setOnClickListener(v1 -> {
@@ -175,17 +185,22 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        MemoryRepository memoryRepository = new MemoryRepository(DestinationCheckInActivity.this);
+        MemoryRepository memoryRepository = new MemoryRepository(this);
         Memory memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
         memoryRepository.insertMemory(memory);
 
-        // TODO: update user points on firebase
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-        userID = user.getUid();
-        reference.child(userID);
-
         // TODO: save checkbox state
-        // TODO: route back to bucket list
+        // BucketListItems setVisited
+
+        // TODO: update user points on firebase
+//        reference = FirebaseDatabase.getInstance().getReference("Users");
+//        userID = user.getUid();
+//        reference.child(userID);
+
+        // save user points (local)
+//        UserRepository userRepository = new UserRepository(this);
+//        User currentUser = userRepository.getUserByEmail(user.getEmail()).get(0);
+//        currentUser.addPoints(10);
 
         Toast.makeText(DestinationCheckInActivity.this, "Memory saved", Toast.LENGTH_SHORT).show();
     }

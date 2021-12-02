@@ -77,6 +77,7 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
             Intent intentDestination = new Intent(DestinationActivity.this, DestinationCheckInActivity.class);
             intentDestination.putExtra("name", destinationName);
             intentDestination.putExtra("coordinates", destinationCoordinates);
+            intentDestination.putExtra("bucket", destinationBucket);
             view.getContext().startActivity(intentDestination);
         });
     }
