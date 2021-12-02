@@ -37,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements DrawerLayout.DrawerListener{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
@@ -69,6 +69,8 @@ public class Home extends AppCompatActivity {
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+
+        drawer.setDrawerListener(this);
 
         navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
             logout();
@@ -200,5 +202,32 @@ public class Home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        UserRepository userRepository = new UserRepository(Home.this);
+        int userPoints = userRepository.getUserByEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get(0).getPoints();
+        Log.i("debug", Integer.toString(userPoints));
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navPoints = (TextView) headerView.findViewById(R.id.nav_header_points);
+        navPoints.setText("Points: " + Integer.toString(userPoints));
+    }
+
+    @Override
+    public void onDrawerClosed (View drawerView){
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

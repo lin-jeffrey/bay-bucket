@@ -17,35 +17,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.baybucket.ImageGridAdapter;
-import com.example.baybucket.ImageTestActivity;
 import com.example.baybucket.MemoryActivity;
 import com.example.baybucket.R;
 import com.example.baybucket.databinding.FragmentProfileBinding;
 import com.example.baybucket.db.Converters;
 import com.example.baybucket.db.MemoryRepository;
-import com.example.baybucket.db.UserRepository;
 import com.example.baybucket.models.Memory;
-import com.example.baybucket.models.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProfileFragment extends Fragment implements OnMapReadyCallback{
@@ -110,7 +101,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
 
 
                     username.setText(currentUsername);
-                    points.setText("Points: " + Integer.toString(currentPoints));
+                    points.setText("Points: " + currentPoints);
                 }
             }
         });
@@ -122,20 +113,17 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
         currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         //temp hard coded memories
+        /*
         Date date =  new Date();
         Memory memorySC = new Memory(currentEmail, "Santa Clara", "37.34927855035714,-121.93883618583588", date, "This was a fun day in Santa Clara", "android.resource://com.example.baybucket/drawable/santa_clara_main");
         Memory memorySF = new Memory(currentEmail, "San Francisco","37.82051413617538,-122.47690203902356", date, "This was a fun day in San Francisco", "android.resource://com.example.baybucket/drawable/pier39");
         Memory memoryPA = new Memory(currentEmail, "Palo Alto","37.42768671107808,-122.16963732630407", date, "This was a fun day in Palo Alto", "android.resource://com.example.baybucket/drawable/palo_alto_main");
         Memory memorySJ = new Memory(currentEmail, "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "android.resource://com.example.baybucket/drawable/san_jose_main");
-        //memoryRepository.deleteMemory(memorySJ);
-        //Memory memorySJ = new Memory(currentEmail, "San Jose", "37.33309065682504,-121.89112191755665", date, "This was a fun day in San Jose", "content://com.example.baybucket.fileprovider/my_images/JPEG_20211201_195122_7954856801698247343.jpg");
-        //Memory memoryBlankImage = new Memory("Joe@email.com", "Berkeley", "37.87170633038972,-122.26054864815632", date, "This was a fun day in Berkeley", "");
 
         memoryRepository.insertMemory(memorySC);
         memoryRepository.insertMemory(memorySF);
         memoryRepository.insertMemory(memoryPA);
-        memoryRepository.insertMemory(memorySJ);
-        //memoryList.add(memoryBlankImage);
+        memoryRepository.insertMemory(memorySJ);*/
 
         List<Memory> dbMemoryList = memoryRepository.getMemoriesByUser(currentEmail);
         memoryList = new ArrayList<Memory>(dbMemoryList);
@@ -163,9 +151,6 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
                 Intent i = new Intent(getActivity(), MemoryActivity.class);
                 i.putExtra("Memory", memoryList.get(position));
                 startActivity(i);
-
-                //Intent i = new Intent(getActivity(), ImageTestActivity.class);
-                //startActivity(i);
             }
         });
         return root;

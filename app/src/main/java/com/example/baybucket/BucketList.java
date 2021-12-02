@@ -319,4 +319,17 @@ public class BucketList extends AppCompatActivity implements LocationListener {
         return(c * r);
 
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //setContentView(R.layout.activity_bucket_list);
+        bucketList = new ArrayList<>();
+        try {
+            loadBucketListItems();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        check_destinationList();
+    }
 }

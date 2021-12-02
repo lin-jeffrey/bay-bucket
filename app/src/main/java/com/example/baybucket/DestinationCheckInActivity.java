@@ -96,7 +96,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
             persistDestinationMemory();
 
-            backToList();
+            //backToList();
+            finish();
         });
 
         btnTakePhoto.setOnClickListener(v1 -> {
