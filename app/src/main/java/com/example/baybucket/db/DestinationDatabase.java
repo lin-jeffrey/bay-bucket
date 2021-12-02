@@ -6,7 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.example.baybucket.models.Destination;
 
-@Database(entities = {Destination.class},version = 1, exportSchema = false)
+@Database(entities = {Destination.class},version = 2, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class DestinationDatabase extends RoomDatabase {
     public abstract DestinationDao destinationDao();

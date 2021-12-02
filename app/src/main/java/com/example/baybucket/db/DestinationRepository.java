@@ -21,7 +21,7 @@ public class DestinationRepository {
     private final DestinationDatabase destinationDatabase;
     public DestinationRepository(Context context){
         final String DB_NAME = "destination_db";
-        destinationDatabase = Room.databaseBuilder(context, DestinationDatabase.class, DB_NAME).build();
+        destinationDatabase = Room.databaseBuilder(context, DestinationDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
     }
 
 
