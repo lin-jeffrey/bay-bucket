@@ -62,9 +62,10 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     ProgressBar pb_loading;
 
     String fetchBucketListAPI_Key;
-    String fetchDistanceAPI_Key;
 
     ImageView main_image;
+
+    Boolean allow_location_access;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             fetchBucketListAPI_Key = bundle.getString("fourSquareKey");
-            fetchDistanceAPI_Key = bundle.getString("distanceMatrixKey");
             //Log.i(TAG, "Bucket List API Key: "+fetchBucketListAPI_Key);
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,9 +104,14 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             ActivityCompat.requestPermissions(BucketList.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, 100);
+            allow_location_access = false;
+        }
+        else{
+            allow_location_access = true;
+            getLocation();
         }
 
-        getLocation();
+
 
         try {
             loadBucketListItems();
@@ -240,17 +245,22 @@ public class BucketList extends AppCompatActivity implements LocationListener {
                             else {
                                 item.setVisited(false);
                             }
-
                             JSONObject geocodes = data_obj.getJSONObject("geocodes");
                             JSONObject main = geocodes.getJSONObject("main");
                             String latitude_dest = main.getString("latitude");
                             String longitude_dest = main.getString("longitude");
-                            String latitude_curr = tv_latitude.getText().toString();
-                            String longitude_curr = tv_longitude.getText().toString();
-                            double distance = calculateDistance(latitude_dest, longitude_dest, latitude_curr, longitude_curr);
-                            //Log.i(TAG, "Distance: "+distance);
-                            String distance_str = String.format("%.2f",distance);
-                            item.setDistance(distance_str + " miles");
+
+                            if(allow_location_access){
+                                String latitude_curr = tv_latitude.getText().toString();
+                                String longitude_curr = tv_longitude.getText().toString();
+                                double distance = calculateDistance(latitude_dest, longitude_dest, latitude_curr, longitude_curr);
+                                //Log.i(TAG, "Distance: "+distance);
+                                String distance_str = String.format("%.2f",distance);
+                                item.setDistance(distance_str + " miles");
+                            }
+                            else{
+                                item.setDistance("-");
+                            }
                             item.setLatitude(latitude_dest);
                             item.setLongitude(longitude_dest);
                             item.setBucketListName(bucketName);
