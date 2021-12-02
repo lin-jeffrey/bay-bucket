@@ -137,7 +137,7 @@ public class Home extends AppCompatActivity implements DrawerLayout.DrawerListen
                     nav_header_points.setText("Points: " + currentPoints);
 
                     UserRepository userRepository = new UserRepository(Home.this);
-                    userRepository.updateUser(new User(currentUsername, currentEmail, Integer.valueOf(currentPoints), ""));
+                    userRepository.insertUser(new User(currentUsername, currentEmail, Integer.valueOf(currentPoints), ""));
                 }
             }
         });
@@ -212,7 +212,13 @@ public class Home extends AppCompatActivity implements DrawerLayout.DrawerListen
     @Override
     public void onDrawerOpened(@NonNull View drawerView) {
         UserRepository userRepository = new UserRepository(Home.this);
-        int userPoints = userRepository.getUserByEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get(0).getPoints();
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        int userPoints;
+        if(userRepository.getUserByEmail(userEmail).size() != 0){
+            userPoints = userRepository.getUserByEmail(userEmail).get(0).getPoints();
+        }else{
+            userPoints = 0;
+        }
         Log.i("debug", Integer.toString(userPoints));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

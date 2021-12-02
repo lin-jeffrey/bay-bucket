@@ -179,8 +179,13 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
         //get location if location didn't change
         Location myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        tv_latitude.setText(String.valueOf(myLocation.getLatitude()));
-        tv_longitude.setText(String.valueOf(myLocation.getLongitude()));
+        if(myLocation != null){
+            tv_latitude.setText(String.valueOf(myLocation.getLatitude()));
+            tv_longitude.setText(String.valueOf(myLocation.getLongitude()));
+        }else{
+            tv_latitude.setText("");
+            tv_longitude.setText("");
+        }
     }
 
     @Override

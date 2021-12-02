@@ -42,8 +42,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class DestinationCheckInActivity extends AppCompatActivity {
 
@@ -208,7 +210,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     private void persistDestinationMemory() {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        timestamp = new Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+        timestamp = calendar.getTime();
 
         // Persist memory
         MemoryRepository memoryRepository = new MemoryRepository(this);

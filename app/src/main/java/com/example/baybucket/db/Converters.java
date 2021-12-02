@@ -33,8 +33,6 @@ public class Converters {
     public static Date fromTimeStamp(String value) {
         if (value != null) {
             try {
-                TimeZone timeZone = TimeZone.getTimeZone("PST");
-                df.setTimeZone(timeZone);
                 return df.parse(value);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -47,8 +45,6 @@ public class Converters {
 
     @TypeConverter
     public static String dateToTimeStamp(Date value) {
-        TimeZone timeZone = TimeZone.getTimeZone("PST");
-        df.setTimeZone(timeZone);
         return value == null ? null : df.format(value);
     }
 
