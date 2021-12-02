@@ -150,6 +150,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         // Intent back to AdapterList
         String destinationBucketName = destinationBucket.replaceAll("\\s", "%20");
         Intent intentList = new Intent(this, BucketList.class);
+        intentList.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intentList.putExtra("name", destinationBucketName);
         startActivity(intentList);
     }

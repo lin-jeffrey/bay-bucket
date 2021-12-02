@@ -1,5 +1,7 @@
 package com.example.baybucket;
 
+import static com.example.baybucket.R.drawable.santa_clara_main;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.ApplicationInfo;
@@ -41,7 +43,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class BucketList extends AppCompatActivity implements LocationListener {
-
     List<BucketListItems> bucketList;
     RecyclerView recyclerView;
     BucketListAdapter bucketListAdapter;
@@ -92,7 +93,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             fetchBucketListAPI_Key = bundle.getString("fourSquareKey");
-            //Log.i(TAG, "Bucket List API Key: "+fetchBucketListAPI_Key);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,8 +111,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             getLocation();
         }
 
-
-
         try {
             loadBucketListItems();
         } catch (IOException e) {
@@ -124,22 +122,22 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     private void changeMainImage() {
         main_image = findViewById(R.id.main_image);
         if(bucketName.equals("san francisco")){
-            main_image.setBackgroundResource(R.drawable.sf_golden_gate);
+            main_image.setImageResource(R.drawable.sf_golden_gate);
         }
         else if(bucketName.equals("santa clara")){
-            main_image.setBackgroundResource(R.drawable.santa_clara_main);
+            main_image.setImageResource(R.drawable.santa_clara_main);
         }
         else if(bucketName.equals("san jose")){
-            main_image.setBackgroundResource(R.drawable.san_jose_main);
+            main_image.setImageResource(R.drawable.san_jose_main);
         }
         else if(bucketName.equals("santa cruz")){
-            main_image.setBackgroundResource(R.drawable.santa_cruz_main);
+            main_image.setImageResource(R.drawable.santa_cruz_main);
         }
         else if(bucketName.equals("berkeley")){
-            main_image.setBackgroundResource(R.drawable.berkely_main);
+            main_image.setImageResource(R.drawable.berkely_main);
         }
         else if(bucketName.equals("palo alto")){
-            main_image.setBackgroundResource(R.drawable.palo_alto_main);
+            main_image.setImageResource(R.drawable.palo_alto_main);
         }
         main_image.requestLayout();
     }
