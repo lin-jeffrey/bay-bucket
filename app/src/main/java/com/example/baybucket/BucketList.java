@@ -62,7 +62,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     ProgressBar pb_loading;
 
     String fetchBucketListAPI_Key;
-    String fetchDistanceAPI_Key;
 
     ImageView main_image;
 
@@ -93,7 +92,6 @@ public class BucketList extends AppCompatActivity implements LocationListener {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
             fetchBucketListAPI_Key = bundle.getString("fourSquareKey");
-            fetchDistanceAPI_Key = bundle.getString("distanceMatrixKey");
             //Log.i(TAG, "Bucket List API Key: "+fetchBucketListAPI_Key);
         } catch (Exception e) {
             e.printStackTrace();
