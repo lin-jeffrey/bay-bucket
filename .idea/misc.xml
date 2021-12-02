@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/layout/activity_bucket_list.xml" value="0.2210144927536232" />
         <entry key="app/src/main/res/layout/activity_destination.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_destination_check_in.xml" value="0.17597060727078578" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1756639245534886" />
         <entry key="app/src/main/res/layout/activity_leader_board.xml" value="0.2210144927536232" />
@@ -36,7 +37,6 @@
         <entry key="app/src/main/res/menu/activity_home_drawer.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/menu/home.xml" value="0.1234375" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.24270833333333333" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1453125" />
       </map>
     </option>
   </component>
