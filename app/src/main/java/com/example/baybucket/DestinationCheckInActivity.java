@@ -49,15 +49,16 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     EditText etDescription;
 
     TextView tv_timestamp, tv_name;
-    String destinationName, destinationCoordinates, destinationBucket;
+    String destinationName, destinationCoordinates, destinationBucket, destinationDistance;
 
     private FirebaseUser user;
-    private DatabaseReference reference;
     private String userID;
     Date timestamp;
 
     String currentPhotoPath;
     Uri photoURI;
+
+    DestinationRepository destinationRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_destination_check_in);
 
         destinationName = getIntent().getExtras().getString("name");
+        destinationDistance = getIntent().getExtras().getString("distance");
         destinationCoordinates = getIntent().getExtras().getString("coordinates");
         destinationBucket = getIntent().getExtras().getString("bucket");
 
@@ -79,8 +81,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         // get coordinates
 
         btnCancel.setOnClickListener(v -> {
-            //Intent intent = new Intent(this, RegisterActivity.class);
-            //startActivity(intent);
+            backToDestination();
         });
 
         btnSubmit.setOnClickListener(view12 -> {
@@ -89,11 +90,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
             persistDestinationMemory();
 
-            // Intent back to AdapterList
-            destinationBucket = destinationBucket.replaceAll("\\s", "%20");
-            Intent intent = new Intent(DestinationCheckInActivity.this, BucketList.class);
-            intent.putExtra("name", destinationBucket);
-            startActivity(intent);
+            backToList();
         });
 
         btnTakePhoto.setOnClickListener(v1 -> {
@@ -128,6 +125,24 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 //                Toast.makeText(DestinationCheckInActivity.this, "Cannot pick image", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+    }
+
+    private void backToDestination() {
+        // Intent back to DestinationActivity
+        Intent intentDestination = new Intent(this, DestinationActivity.class);
+        intentDestination.putExtra("name", destinationName);
+        intentDestination.putExtra("distance", destinationDistance);
+        intentDestination.putExtra("coordinates", destinationCoordinates);
+        intentDestination.putExtra("bucket", destinationBucket);
+        startActivity(intentDestination);
+    }
+
+    private void backToList() {
+        // Intent back to AdapterList
+        String destinationBucketName = destinationBucket.replaceAll("\\s", "%20");
+        Intent intentList = new Intent(this, BucketList.class);
+        intentList.putExtra("name", destinationBucketName);
+        startActivity(intentList);
     }
 
     private void checkCameraPermission() {
@@ -186,22 +201,22 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     private void persistDestinationMemory() {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         timestamp = new Date(System.currentTimeMillis());
 
-        // what to do with empty URI?
+        // Persist memory
         MemoryRepository memoryRepository = new MemoryRepository(this);
         Memory memory;
-        if (etDescription.getText().toString().isEmpty() || photoURI == null) {
+        if (photoURI == null) {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
         } else {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
         }
-        Log.i("tag", user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
+        Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
         memoryRepository.insertMemory(memory);
 
-        // TODO: save checkbox state
-        // BucketListItems setVisited
+        // Persist destination
+        destinationRepository = new DestinationRepository(this.getApplicationContext());
+        destinationRepository.insertDestination(destinationName, destinationBucket);
 
         // TODO: update user points on firebase
 //        reference = FirebaseDatabase.getInstance().getReference("Users");
