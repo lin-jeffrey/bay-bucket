@@ -4,12 +4,18 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.baybucket.db.UserRepository;
+import com.example.baybucket.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import android.widget.SearchView;
@@ -29,13 +35,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 public class Home extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
     //to access user that is logged in
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference mDatabase;
     private String userID;
 
     private String userName="";
@@ -108,28 +116,31 @@ public class Home extends AppCompatActivity {
         });
         //Accessing user details of current user
         user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserDetails userProfile = snapshot.getValue(UserDetails.class);
-                if(userProfile!=null){
-                    userName = userProfile.name;
-                    userPoints =  userProfile.points;
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().child("name").getValue()));
+                    String currentUsername = String.valueOf(task.getResult().child("name").getValue());
+                    String currentEmail = String.valueOf(task.getResult().child("email").getValue());
+                    String currentPoints = String.valueOf(task.getResult().child("points").getValue());
 
                     //setting header text elements
-                    nav_header_username.setText(userName);
-                    nav_header_points.setText("Points: " + userPoints);
+                    nav_header_username.setText(currentUsername);
+                    nav_header_points.setText("Points: " + currentPoints);
+
+                    UserRepository userRepository = new UserRepository(Home.this);
+                    userRepository.updateUser(new User(currentUsername, currentEmail, Integer.valueOf(currentPoints), ""));
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Home.this,"Something went wrong in login",Toast.LENGTH_LONG).show();
-
-            }
         });
+
+
     }
 
     private void doMySearch(String query) {

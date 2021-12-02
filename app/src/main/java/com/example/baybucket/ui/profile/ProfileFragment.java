@@ -107,6 +107,8 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
                     Log.i("Tag", String.valueOf(task.getResult().child("email").getValue()));
                     Log.i("Tag", currentEmail);
 
+
+
                     username.setText(currentUsername);
                     points.setText("Points: " + Integer.toString(currentPoints));
                 }
@@ -139,9 +141,13 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
         memoryList = new ArrayList<Memory>(dbMemoryList);
         try {
             for(int i = 0; i < memoryList.size(); i++) {
-                if(memoryList.get(i).getImageUri() != ""){
+                if(memoryList.get(i).getImageUri().length() != 0){
                     uriList.add(Uri.parse(memoryList.get(i).getImageUri()));
                     Log.i("image", memoryList.get(i).getImageUri());
+                }
+                else{
+                    Log.i("debug", "default image");
+                    uriList.add(Uri.parse("android.resource://com.example.baybucket/drawable/default_image"));
                 }
                 memoryList.get(i).printMemory();
             }
