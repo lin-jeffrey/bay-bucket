@@ -82,8 +82,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         });
 
         btnSubmit.setOnClickListener(view12 -> {
-            CommonConfetti.rainingConfetti(findViewById(R.id.container), new int[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN })
-                    .infinite();
+//            CommonConfetti.rainingConfetti(findViewById(R.id.container), new int[] { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN })
+//                    .infinite();
 
             persistDestinationMemory();
 
@@ -185,8 +185,14 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        // what to do with empty URI?
         MemoryRepository memoryRepository = new MemoryRepository(this);
-        Memory memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
+        Memory memory;
+        if (etDescription.getText().toString().isEmpty() || photoURI == null) {
+            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
+        } else {
+            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
+        }
         memoryRepository.insertMemory(memory);
 
         // TODO: save checkbox state
