@@ -80,6 +80,7 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
             intentDestination.putExtra("coordinates", destinationCoordinates);
             intentDestination.putExtra("bucket", destinationBucket);
             startActivity(intentDestination);
+            finish();
         });
     }
 

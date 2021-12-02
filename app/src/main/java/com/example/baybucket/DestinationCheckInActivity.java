@@ -90,6 +90,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
         btnCancel.setOnClickListener(v -> {
             backToDestination();
+            finish();
         });
 
         btnSubmit.setOnClickListener(view12 -> {
