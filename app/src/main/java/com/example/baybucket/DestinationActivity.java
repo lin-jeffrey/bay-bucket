@@ -89,22 +89,22 @@ public class DestinationActivity extends AppCompatActivity implements OnMapReady
 
         switch (destinationBucket) {
             case "san francisco":
-                main_image.setBackgroundResource(R.drawable.sf_golden_gate);
+                main_image.setImageResource(R.drawable.sf_golden_gate);
                 break;
             case "santa clara":
-                main_image.setBackgroundResource(R.drawable.santa_clara_main);
+                main_image.setImageResource(R.drawable.santa_clara_main);
                 break;
             case "san jose":
-                main_image.setBackgroundResource(R.drawable.san_jose_main);
+                main_image.setImageResource(R.drawable.san_jose_main);
                 break;
             case "santa cruz":
-                main_image.setBackgroundResource(R.drawable.santa_cruz_main);
+                main_image.setImageResource(R.drawable.santa_cruz_main);
                 break;
             case "berkeley":
-                main_image.setBackgroundResource(R.drawable.berkely_main);
+                main_image.setImageResource(R.drawable.berkely_main);
                 break;
             case "palo alto":
-                main_image.setBackgroundResource(R.drawable.palo_alto_main);
+                main_image.setImageResource(R.drawable.palo_alto_main);
                 break;
         }
         main_image.requestLayout();

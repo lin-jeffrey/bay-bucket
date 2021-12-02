@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -58,6 +60,13 @@ public class MemoryGalleryFragment extends Fragment {
         MemoryRepository memoryRepository = new MemoryRepository(getActivity());
         List<Memory> dbMemoryList = memoryRepository.getMemoriesByUser(userEmail);
         memoryList = new ArrayList<Memory>(dbMemoryList);
+
+        Collections.sort(memoryList, new Comparator<Memory>() {
+            @Override
+            public int compare(Memory o1, Memory o2) {
+                return o2.getCheckInDate().compareTo(o1.getCheckInDate());
+            }
+        });
 
         try {
             for(int i = 0; i < memoryList.size(); i++) {

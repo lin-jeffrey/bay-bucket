@@ -48,6 +48,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     BucketListAdapter bucketListAdapter;
     TextView tv_latitude;
     TextView tv_longitude;
+    TextView tv_bucketListName;
     LocationManager locationManager;
     String bucketListName;
     String bucketName;
@@ -78,6 +79,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
         tv_longitude = findViewById(R.id.tv_longitude);
         pb_bucketListProgress = findViewById(R.id.pb_bucketListProgress);
         tv_progress = findViewById(R.id.tv_progress);
+        tv_bucketListName = findViewById(R.id.tv_bucket_name);
         bucketList = new ArrayList<>();
         bucketListName = getIntent().getExtras().getString("name");
         bucketName = bucketListName;
@@ -85,6 +87,7 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
         destinationRepository = new DestinationRepository(this.getApplicationContext());
 
+        tv_bucketListName.setText(capitalizeString(bucketName));
 
         changeMainImage();
 
@@ -330,16 +333,17 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        //setContentView(R.layout.activity_bucket_list);
-        bucketList = new ArrayList<>();
-        try {
-            loadBucketListItems();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static String capitalizeString(String string) {
+        char[] chars = string.toLowerCase().toCharArray();
+        boolean found = false;
+        for (int i = 0; i < chars.length; i++) {
+            if (!found && Character.isLetter(chars[i])) {
+                chars[i] = Character.toUpperCase(chars[i]);
+                found = true;
+            } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'') { // You can add other chars here
+                found = false;
+            }
         }
-        check_destinationList();
+        return String.valueOf(chars);
     }
 }

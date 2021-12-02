@@ -55,6 +55,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
     Button btnCancel, btnSubmit;
     ImageView mainImage;
     EditText etDescription;
+    TextView tvDestinationName;
 
     TextView tv_timestamp, tv_name;
     String destinationName, destinationCoordinates, destinationBucket, destinationDistance;
@@ -84,6 +85,8 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.button_cancel);
         btnSubmit = findViewById(R.id.button_submit);
         etDescription = findViewById(R.id.description_edit_text);
+        tvDestinationName = findViewById(R.id.check_in_destination);
+        tvDestinationName.setText("Check in at " + destinationName);
 
         // get bucketListItemName
         // get coordinates

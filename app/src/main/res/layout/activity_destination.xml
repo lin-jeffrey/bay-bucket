@@ -16,19 +16,20 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pier39" />
+        android:src="@drawable/pier39" />
+
 
     <TextView
         android:id="@+id/destination_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center_vertical|center_horizontal"
         android:text="Destination"
         android:textColor="@color/black"
-        android:textSize="24dp"
+        android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView_destination" />
 
@@ -55,8 +56,8 @@
 
     <ImageView
         android:id="@+id/icon_alert"
-        android:layout_width="25dp"
-        android:layout_height="31dp"
+        android:layout_width="30dp"
+        android:layout_height="32dp"
         app:srcCompat="@drawable/icon_alert"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/destination_name"
@@ -69,14 +70,16 @@
         android:layout_height="31dp"
         android:gravity="center_vertical"
         android:text="Face mask required for entry"
+        android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/icon_alert"
         app:layout_constraintTop_toTopOf="@id/icon_alert"
         android:layout_marginStart="16dp"/>
 
     <ImageView
         android:id="@+id/icon_car"
-        android:layout_width="25dp"
-        android:layout_height="31dp"
+        android:layout_width="30dp"
+        android:layout_height="32dp"
         app:srcCompat="@drawable/icon_car"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/icon_alert"
@@ -89,6 +92,8 @@
         android:layout_height="31dp"
         android:gravity="center_vertical"
         android:text="1 mile"
+        android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/icon_car"
         app:layout_constraintTop_toTopOf="@id/icon_car"
         android:layout_marginStart="16dp"/>
@@ -139,6 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/i_m_here"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
