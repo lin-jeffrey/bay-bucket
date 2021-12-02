@@ -37,7 +37,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:indeterminateTint="#B0E596"/>
+            android:indeterminateTint="@color/primary"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/destinationsList"
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:progress="70"
             android:progressBackgroundTint="#DAD7D7"
-            android:progressTint="#B0E596"
+            android:progressTint="@color/primary"
             android:visibility="gone" />
 
         <TextView
