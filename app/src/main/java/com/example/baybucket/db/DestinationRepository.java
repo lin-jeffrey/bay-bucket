@@ -24,13 +24,9 @@ public class DestinationRepository {
         destinationDatabase = Room.databaseBuilder(context, DestinationDatabase.class, DB_NAME).build();
     }
 
-    public void insertDestination(String destName, String destAddress, String destDesc, String bucketListName) {
-        Destination destination = new Destination(destName, destAddress, destDesc, bucketListName);
-        insertDestination(destination);
-    }
 
-    public void insertDestination(String destName, String destAddress, String destDesc, String bucketListName, ArrayList<Integer> destRatings, Integer visits) {
-        Destination destination = new Destination(destName, destAddress, destDesc, bucketListName, destRatings, visits);
+    public void insertDestination(String destName, String bucketListName) {
+        Destination destination = new Destination(destName, bucketListName);
         insertDestination(destination);
     }
 
