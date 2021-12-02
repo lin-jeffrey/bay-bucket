@@ -146,9 +146,13 @@ public class BucketList extends AppCompatActivity implements LocationListener {
 
     private void showProgress() {
         List<Destination> destinationList = destinationRepository.getDestByBucketList(bucketName);
-        int progress = destinationList.size() * 10;
+        int progress = 0;
+        if(destinationList != null){
+            progress = destinationList.size() * 10;
+        }
+
         //Log.i(TAG, "DESTINATION LIST SIZE: "+destinationList.size());
-        if(destinationList.size() > 0){
+        if(progress > 0){
             pb_bucketListProgress.setProgress(progress);
             tv_progress.setText(String.valueOf(progress)+" % complete");
             pb_bucketListProgress.setVisibility(View.VISIBLE);
@@ -159,9 +163,11 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     private void check_destinationList() {
         List<Destination> destinationList = destinationRepository.getDestByBucketList(bucketName);
         finishedItems = new ArrayList<String>();
-        for(int i = 0; i < destinationList.size(); i++){
-            String finishedItem = destinationList.get(i).getName();
-            finishedItems.add(finishedItem);
+        if(destinationList != null){
+            for(int i = 0; i < destinationList.size(); i++){
+                String finishedItem = destinationList.get(i).getName();
+                finishedItems.add(finishedItem);
+            }
         }
 
     }
