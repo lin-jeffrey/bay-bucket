@@ -98,7 +98,7 @@ public class DestinationCheckInActivity extends AppCompatActivity {
 
             persistDestinationMemory();
 
-            //backToList();
+            backToList();
             finish();
         });
 
@@ -216,12 +216,13 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         // Persist memory
         MemoryRepository memoryRepository = new MemoryRepository(this);
         Memory memory;
-        if (photoURI == null) {
-            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
-        }else {
+        if (photoURI != null) {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
+            Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
+        }else {
+            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
+            Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp);
         }
-        Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
         memoryRepository.insertMemory(memory);
 
         // Persist destination

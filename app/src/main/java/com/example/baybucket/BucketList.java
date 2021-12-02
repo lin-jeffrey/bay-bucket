@@ -274,6 +274,10 @@ public class BucketList extends AppCompatActivity implements LocationListener {
                                 String longitude_curr = tv_longitude.getText().toString();
                                 double distance = calculateDistance(latitude_dest, longitude_dest, latitude_curr, longitude_curr);
                                 //Log.i(TAG, "Distance: "+distance);
+                                if (distance == -1) {
+                                    item.setDistance("-");
+                                    break;
+                                }
                                 String distance_str = String.format("%.2f",distance);
                                 item.setDistance(distance_str + " miles");
                             }
@@ -307,6 +311,9 @@ public class BucketList extends AppCompatActivity implements LocationListener {
     }
 
     private double calculateDistance(String latitude_dest, String longitude_dest, String latitude_curr, String longitude_curr) throws IOException, JSONException {
+        if (latitude_dest.isEmpty() || longitude_dest.isEmpty() || latitude_curr.isEmpty() || longitude_curr.isEmpty()) {
+            return -1;
+        }
         double latitude_dest_d = Double.parseDouble(latitude_dest);
         double longitude_dest_d = Double.parseDouble(longitude_dest);
         double latitude_curr_d = Double.parseDouble(latitude_curr);
