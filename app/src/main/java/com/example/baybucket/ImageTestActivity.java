@@ -20,7 +20,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.example.baybucket.db.UserRepository;
+import com.example.baybucket.models.User;
 import com.google.android.gms.maps.MapView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,19 +38,24 @@ public class ImageTestActivity extends AppCompatActivity {
     Button btnTakePhoto;
     ImageView main_image;
     TextView photoUriText;
+    Button btnCancel, btnSubmit;
 
     String currentPhotoPath;
 
     Uri photoURI;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_test);
 
-        main_image = findViewById(R.id.test_image_view);
-        btnTakePhoto = findViewById(R.id.test_image_button);
-        photoUriText = findViewById(R.id.photo_uri_text);
+        main_image = findViewById(R.id.profile_image_preview);
+        btnTakePhoto = findViewById(R.id.take_profile_image_button);
+
+        btnCancel = findViewById(R.id.button_cancel);
+        btnSubmit = findViewById(R.id.button_submit);
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +70,13 @@ public class ImageTestActivity extends AppCompatActivity {
                 }
                 if (photoFile != null) {
                     photoURI = FileProvider.getUriForFile(ImageTestActivity.this, "com.example.baybucket.fileprovider", photoFile);
-                    photoUriText.setText(String.valueOf(photoURI));
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    UserRepository userRepository = new UserRepository(ImageTestActivity.this);
+                    if(userRepository.getUserByEmail(user.getEmail()).size() > 0){
+                        userRepository.getUserByEmail(user.getEmail()).get(0).setImageUri(photoURI.toString());
+                    }
                     takePhoto.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     try {
                         startActivityForResult(takePhoto, 1);
@@ -70,6 +87,14 @@ public class ImageTestActivity extends AppCompatActivity {
                 }
 
             }
+        });
+
+        btnCancel.setOnClickListener(v -> {
+            finish();
+        });
+
+        btnSubmit.setOnClickListener(view12 -> {
+            finish();
         });
 
     }
@@ -89,6 +114,7 @@ public class ImageTestActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         main_image.setImageURI(photoURI);
     }
 

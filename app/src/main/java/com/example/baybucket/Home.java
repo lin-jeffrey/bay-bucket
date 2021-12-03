@@ -135,6 +135,7 @@ public class Home extends AppCompatActivity implements DrawerLayout.DrawerListen
                     //setting header text elements
                     nav_header_username.setText(currentUsername);
                     nav_header_points.setText("Points: " + currentPoints);
+                    //insert photo here
 
                     UserRepository userRepository = new UserRepository(Home.this);
                     userRepository.insertUser(new User(currentUsername, currentEmail, Integer.valueOf(currentPoints), ""));

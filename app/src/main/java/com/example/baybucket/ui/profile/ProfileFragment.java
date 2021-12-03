@@ -17,11 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.baybucket.ImageGridAdapter;
+import com.example.baybucket.ImageTestActivity;
 import com.example.baybucket.MemoryActivity;
 import com.example.baybucket.R;
 import com.example.baybucket.databinding.FragmentProfileBinding;
 import com.example.baybucket.db.Converters;
 import com.example.baybucket.db.MemoryRepository;
+import com.example.baybucket.db.UserRepository;
 import com.example.baybucket.models.Memory;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -70,9 +73,35 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback{
         View root = binding.getRoot();
 
         //UI linking
-        profile_image = (ImageView)root.findViewById(R.id.profile_picture);
+        //profile_image = (ImageView)root.findViewById(R.id.profile_picture);
         username = (TextView)root.findViewById(R.id.username);
         points = (TextView)root.findViewById(R.id.points);
+/*
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePhoto = new Intent(getActivity(), ImageTestActivity.class);
+                startActivity(takePhoto);
+            }
+        });*/
+/*
+        UserRepository userRepository = new UserRepository(getActivity());
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(userRepository.getUserByEmail(currentFirebaseUser.getEmail()).size() > 0){
+            Log.i("log", "size: " + String.valueOf(userRepository.getUserByEmail(currentFirebaseUser.getEmail()).size()));
+            String profileImageUri = userRepository.getUserByEmail(currentFirebaseUser.getEmail()).get(0).getImageUri();
+            userRepository.getUserByEmail(currentFirebaseUser.getEmail()).get(0).printUser();
+            System.out.println(profileImageUri);
+            if(profileImageUri != null){
+                Log.i("log", profileImageUri);
+                profile_image.setImageURI(Uri.parse(profileImageUri));
+            }
+            else{
+                profile_image.setImageURI(Uri.parse("android.resource://com.example.baybucket/drawable/default_profile_image"));
+                Log.i("log", "default profile");
+            }
+        }*/
 
         //memory image grid
         imageGrid = (GridView)root.findViewById(R.id.memories_grid);

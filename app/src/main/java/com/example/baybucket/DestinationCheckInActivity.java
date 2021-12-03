@@ -224,9 +224,9 @@ public class DestinationCheckInActivity extends AppCompatActivity {
         if (photoURI != null) {
             memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), photoURI.toString());
             Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString() + " " + photoURI.toString());
-        }else {
-            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp);
-            Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp);
+        } else {
+            memory = new Memory(user.getEmail(), destinationName, destinationCoordinates, timestamp, etDescription.getText().toString(), "");
+            Log.i(TAG, user.getEmail() + " " + destinationName + " " + destinationCoordinates + " " + timestamp + " " + etDescription.getText().toString());
         }
         memoryRepository.insertMemory(memory);
 

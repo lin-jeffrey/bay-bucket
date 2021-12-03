@@ -1,5 +1,6 @@
 package com.example.baybucket.ui.leaderboard;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -95,20 +96,23 @@ public class LeaderboardFragment extends Fragment {
             TableRow tbrow = new TableRow(getActivity());
             TextView t1v = new TextView(getActivity());
             t1v.setText(Integer.toString(i+1));
-            t1v.setGravity(Gravity.CENTER);
+            t1v.setGravity(Gravity.LEFT);
             t1v.setTextSize(20);
+            t1v.setTextColor(Color.BLACK);
             t1v.setPadding(30, 20, 10, 30 );
             tbrow.addView(t1v);
             TextView t2v = new TextView(getActivity());
             t2v.setText(userDetailsList.get(i).name);
             t2v.setGravity(Gravity.CENTER);
             t2v.setTextSize(20);
-            t2v.setPadding(280, 20, 280, 30 );
+            t2v.setTextColor(Color.BLACK);
+            t2v.setPadding(170, 20, 170, 30 );
             tbrow.addView(t2v);
             TextView t3v = new TextView(getActivity());
             t3v.setText(userDetailsList.get(i).points);
-            t3v.setGravity(Gravity.CENTER);
+            t3v.setGravity(Gravity.RIGHT);
             t3v.setTextSize(20);
+            t3v.setTextColor(Color.BLACK);
             t3v.setPadding(10, 20, 30, 30 );
             tbrow.addView(t3v);
             table_main.addView(tbrow);
